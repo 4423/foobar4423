@@ -23,16 +23,14 @@ namespace foobar4423
         {
             InitializeComponent();
 
-            consumerKey = "fhtoSvAE9Uaxmnv51Nbalg";
-            consumerSecret = "lbHj8x8ghEtmnv6TZarKIKUseWrFxLzesSl8XkapkX4";
-            
+            consumerKey = Properties.Resources.CK;
+            consumerSecret = Properties.Resources.CS;
         }
 
         private async void button_OAuth_Click(object sender, EventArgs e)
         {
             button_OAuth.Enabled = false;
 
-            //非同期処理
             await Task.Run(() =>
             {
                 service = new TwitterService(consumerKey, consumerSecret);
@@ -45,7 +43,7 @@ namespace foobar4423
         }
 
         private void button_token_Click(object sender, EventArgs e)
-        {    
+        {
             if (string.IsNullOrEmpty(textBox_pin.Text))
             {
                 MessageBox.Show("PINを入力して下さい。", "エラー",
