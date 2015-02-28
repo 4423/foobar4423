@@ -1,4 +1,5 @@
-﻿using System;
+﻿using foobar4423.Properties;
+using System;
 using System.Windows.Forms;
 
 namespace foobar4423
@@ -49,39 +50,32 @@ namespace foobar4423
         /// </summary>
         internal void SaveConfig()
         {
-            foobar4423.Properties.Settings.Default.exeFilePath = textBox_filePath.Text;
-            Properties.Settings.Default.nowPlayingFormat = textBox_format.Text;
+            Settings.Default.FoobarFilePath = textBox_filePath.Text;
+            Settings.Default.NowPlayingFormat = textBox_format.Text;
+            Settings.Default.IsBalloon = checkBox_balloon.Checked;
 
-            if (checkBox_balloon.Checked == true) Properties.Settings.Default.balloon = true;
-            else Properties.Settings.Default.balloon = false;
-
-            Properties.Settings.Default.Save();
+            Settings.Default.Save();
         }
         
         /// <summary>
         /// 読み込み
         /// </summary>
-        internal void LoadConfig()
+        private void LoadConfig()
         {
-            textBox_filePath.Text = foobar4423.Properties.Settings.Default.exeFilePath;
-
-            if(Properties.Settings.Default.nowPlayingFormat != string.Empty)
-                textBox_format.Text = Properties.Settings.Default.nowPlayingFormat;
-
-            if (Properties.Settings.Default.balloon == true) 
-                checkBox_balloon.Checked = true;
+            textBox_filePath.Text = Settings.Default.FoobarFilePath;
+            textBox_format.Text = Settings.Default.NowPlayingFormat;
+            checkBox_balloon.Checked = Settings.Default.IsBalloon;
         }
 
         private void button_help_Click(object sender, EventArgs e)
         {
             Form_Help fh = new Form_Help();
-
             fh.Show();
         }
 
         private void button_reset_Click(object sender, EventArgs e)
         {
-            textBox_format.Text = "$SONG$ - $ARTIST$ via $ALBUM$ - $ALBUM_ARTIST$ / $TRACK_NUMBER$ #nowplaying";
+            textBox_format.Text = Resources.DefaultNPFormat;
         }
     }
 }

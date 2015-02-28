@@ -2,22 +2,22 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="foobar4423.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="exeFilePath" Type="System.String" Scope="User">
+    <Setting Name="FoobarFilePath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="accessToken" Type="System.String" Scope="User">
+    <Setting Name="AT" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="accessTokenSecret" Type="System.String" Scope="User">
+    <Setting Name="ATS" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="screenName" Type="System.String" Scope="User">
+    <Setting Name="ScreenName" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="nowPlayingFormat" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="NowPlayingFormat" Type="System.String" Scope="User">
+      <Value Profile="(Default)">"$SONG$ - $ARTIST$ via $ALBUM$ - $ALBUM_ARTIST$ / $TRACK_NUMBER$ #nowplaying";</Value>
     </Setting>
-    <Setting Name="balloon" Type="System.Boolean" Scope="User">
+    <Setting Name="IsBalloon" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>

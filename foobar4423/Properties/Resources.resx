@@ -123,4 +123,7 @@
   <data name="CS" xml:space="preserve">
     <value>lbHj8x8ghEtmnv6TZarKIKUseWrFxLzesSl8XkapkX4</value>
   </data>
+  <data name="DefaultNPFormat" xml:space="preserve">
+    <value>$SONG$ - $ARTIST$ via $ALBUM$ - $ALBUM_ARTIST$ / $TRACK_NUMBER$ #nowplaying</value>
+  </data>
 </root>

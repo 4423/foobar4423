@@ -1,93 +1,58 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Threading;
 using System.Windows.Forms;
 using System.Windows;
 using TweetSharp;
+using foobar4423.Properties;
 
 namespace foobar4423
 {
     public partial class Form1 : Form
     {
+        private TwitterService service; 
+        private NowPlayingFormat npf = new NowPlayingFormat();
 
-        private TwitterService service;
-
-        private string consumerKey;
-        private string consumerSecret;
-        private string accessToken;
-        private string accessTokenSecret;
-        private string screenName;
-        private string filePath;
-        private string nowPlayingFormat;
-        private bool isBalloon;
-
-        ProcessInformation pi;
-        NowPlayingFormat npf;
+        private string ScreenName
+        {
+            get
+            {
+                string screenName = Settings.Default.ScreenName;
+                return (screenName == string.Empty) ? screenName : "@" + screenName;
+            }
+        }
 
 
         public Form1()
         {
             InitializeComponent();
 
-            consumerKey = "fhtoSvAE9Uaxmnv51Nbalg";
-            consumerSecret = "lbHj8x8ghEtmnv6TZarKIKUseWrFxLzesSl8XkapkX4";
-            service = new TwitterService(consumerKey, consumerSecret);
+            try {
+                service = new TwitterService(Resources.CK, Resources.CS);
+                service.AuthenticateWith(Settings.Default.AT, Settings.Default.ATS);
+            }
+            catch (Exception) {
+                SyncInvoke(() => toolStripStatusLabel_status.Text = "Cannot recognize the token");
+            }
 
-            LoadConfig();
-            
-            pi = new ProcessInformation();
-            npf = new NowPlayingFormat();
+            toolStripTextBox_screenName.Text = ScreenName;
         }
 
-
-/*******ユーティリティ*******/
-        /// <summary>
-        /// 別スレッド上からUIスレッドを操作
-        /// </summary>
-        /// <seealso cref="http://xin9le.net/articles/21"/>
-        private void SyncInvoke(Action action)
-        {
-            if (this.InvokeRequired) this.Invoke(action);
-            else action();
-        }
-
-
-/*******設定*******/
-        internal bool LoadConfig()
-        {
-            accessToken = foobar4423.Properties.Settings.Default.accessToken;
-            accessTokenSecret = foobar4423.Properties.Settings.Default.accessTokenSecret;
-            screenName = foobar4423.Properties.Settings.Default.screenName;
-            filePath = foobar4423.Properties.Settings.Default.exeFilePath;
-            nowPlayingFormat = Properties.Settings.Default.nowPlayingFormat;
-            isBalloon = Properties.Settings.Default.balloon;
-
-            service.AuthenticateWith(accessToken, accessTokenSecret);
-
-            if(screenName != string.Empty)
-                toolStripTextBox_screenName.Text = "@" + screenName;
-
-            return false;
-        }
 
        
-/*******メニュー*******/
-
+/*******メニュー画面*******/
         private void toolStripMenuItem_Config_Click(object sender, EventArgs e)
         {
             Form_Config fc = new Form_Config();
-
             fc.ShowDialog();
-            LoadConfig();
         }
 
         private void ToolStripMenuItem_OAuth_Click(object sender, EventArgs e)
         {
             Form_OAuth fo = new Form_OAuth();
-
             fo.ShowDialog();
-            LoadConfig();
+
+            toolStripTextBox_screenName.Text = ScreenName;
         }
 
         private void ToolStripMenuItem_Exit_Click(object sender, EventArgs e)
@@ -97,19 +62,11 @@ namespace foobar4423
 
        
 /*******ツイート*******/
-
         /// <summary>
         /// textBoxのなうぷれをツイート
         /// </summary>
         private void PostNowPlaying()
         {
-            if (LoadConfig())
-            {
-                SyncInvoke(() =>
-                    toolStripStatusLabel_status.Text = "cannot recognize the token");
-                return;
-            }
-
             string tweetStr = textBox_info.Text;
             if (tweetStr == string.Empty)
             {
@@ -151,78 +108,49 @@ namespace foobar4423
 
 
 /*******foobar2000*******/
-        
-        /// <summary>
-        /// ウィンドウタイトルを取得させる
-        /// </summary>
-        /// <returns>正常に取得出来なかったらempty</returns>
-        private string GetWindowTitle()
-        {
-            string windowTitle = "";
-
-            try
-            {
-                windowTitle = pi.GetFoobarTitle(filePath);
-            }
-            catch (Exception ex)
-            {
-                SyncInvoke(() => toolStripStatusLabel_status.Text = ex.Message);
-                return string.Empty;
-            }
-
-            return windowTitle;
-        }
-
-
         /// <summary>
         /// なうぷれを取得
         /// </summary>
         private void GetNowPlaying()
         {
-            string textBoxText = "";
-            string windowTitle = GetWindowTitle();
-
-            if (windowTitle == string.Empty) return;
-
-            if (windowTitle == "not found")
+            string windowTitle;
+            try
             {
-                SyncInvoke(() => 
-                    toolStripStatusLabel_status.Text = "cannot detect foobar2000");
+                windowTitle = Utility.FoobarWindowTitle(Settings.Default.FoobarFilePath);
+            }
+            catch (Exception ex)
+            {
+                SyncInvoke(() => toolStripStatusLabel_status.Text = ex.Message);
                 return;
             }
 
-
-            textBoxText = npf.GenerateTweetString(windowTitle, nowPlayingFormat);
-
-            if (textBoxText == "foobar2000")
+            if (windowTitle == null)
             {
                 SyncInvoke(() => 
-                    toolStripStatusLabel_status.Text = "cannot generate NowPlaying");
+                    toolStripStatusLabel_status.Text = "Cannot detect foobar2000");
+                return;
+            }
+            
+
+            string nowPlayingText = npf.GenerateTweetString(windowTitle, Settings.Default.NowPlayingFormat);
+            if (nowPlayingText == "foobar2000")
+            {
+                SyncInvoke(() => 
+                    toolStripStatusLabel_status.Text = "Cannot generate NowPlaying");
                 return;
             }
 
-            //連続した空白除去
-            int whitePos = 0;
-            while ((whitePos = textBoxText.IndexOf("  ")) != -1)
-                textBoxText = textBoxText.Replace("  ", " ");
-
-
-            SyncInvoke(() => textBox_info.Text = textBoxText);
             SyncInvoke(() => 
-                toolStripStatusLabel_status.Text = "successful to generate NowPlaying");
+                textBox_info.Text = Utility.RemoveContinuousWhiteSpace(nowPlayingText));
+            SyncInvoke(() => 
+                toolStripStatusLabel_status.Text = "Successful to generate NowPlaying");
         }
 
 
-        /// <summary>
-        /// async/awaitを使用
-        /// <seealso cref="http://xin9le.net/articles/70"/>
-        /// </summary>
         private async void button_getNowPlaying_Click(object sender, EventArgs e)
         {
             button_getNowPlaying.Enabled = false;
-
             await Task.Run(() => GetNowPlaying());
-
             button_getNowPlaying.Enabled = true;
         }
 
@@ -235,23 +163,24 @@ namespace foobar4423
         }
 
 
-/*******自動投稿*******/
+        #region "  AutoPost  "
 
-        bool firstCheckBoxFlag = false;
-        string preWindowTitle;
-
-
+        private bool isAutoPostFirstTime = false;
         private void checkBox_autoPost_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox_autoPost.Checked == true)
+            if (checkBox_autoPost.Checked)
             {
-                firstCheckBoxFlag = true;
+                isAutoPostFirstTime = true;
                 timer1.Enabled = true;
             }
-            else timer1.Enabled = false;
+            else
+            {
+                timer1.Enabled = false;
+            }
         }
-        
 
+
+        private string preWindowTitle;
         /// <summary>
         /// 指定された時間が経過後に実行
         /// </summary>
@@ -260,39 +189,37 @@ namespace foobar4423
         private void timer1_Tick(object sender, EventArgs e)
         {
             timer1.Stop();
-            string windowTitle = GetWindowTitle();
-            
 
+            //TODO 例外処理 もともとgetwindowtitle()
+            string windowTitle = Utility.FoobarWindowTitle(Settings.Default.FoobarFilePath); ;
+            
             //AutoPostチェック初回は回避
-            if (firstCheckBoxFlag == true)
+            if (isAutoPostFirstTime)
             {
                 preWindowTitle = windowTitle;
-                firstCheckBoxFlag = false;
+                isAutoPostFirstTime = false;
                 timer1.Start();
                 return;
             }
 
             //前回と同じ||タイトルを取得できない なら何もしない
-            if (preWindowTitle == windowTitle || windowTitle == string.Empty
-                || windowTitle == "not found")
+            if (preWindowTitle == windowTitle || String.IsNullOrEmpty(windowTitle))
             {
                 timer1.Start();
                 return;
             }
-
             preWindowTitle = windowTitle;
 
-            //前回と変化があるなら なうぷれ取得
+            //投稿
             GetNowPlaying();
-
-            //ツイット
             PostNowPlaying();
             
             timer1.Start();
         }
 
+        #endregion
 
-/*******通知領域*******/
+        #region "  通知領域  "
 
         //最小化時
         private void Form1_Resize(object sender, EventArgs e)
@@ -309,30 +236,28 @@ namespace foobar4423
         {
             Display();
         }
-
-
-        //最小化時にtoolStripのテキストを...
+       
         private void toolStripStatusLabel_status_TextChanged(object sender, EventArgs e)
         {
-            //本当にやる？
-            if (isBalloon == true)
-            {
-                if (toolStripStatusLabel_status.Text == "Post successful")
-                {
-                    this.notifyIcon1.BalloonTipIcon = ToolTipIcon.Info;
-                    this.notifyIcon1.BalloonTipTitle = "Post NowPlaying!";
-                    this.notifyIcon1.BalloonTipText = this.textBox_info.Text;
-                    this.notifyIcon1.ShowBalloonTip(1000);
-                }
+            if (!Settings.Default.IsBalloon) return;
 
-                if (toolStripStatusLabel_status.Text == "Post failed")
-                {
-                    this.notifyIcon1.BalloonTipIcon = ToolTipIcon.Error;
-                    this.notifyIcon1.BalloonTipTitle = "Post error!";
-                    this.notifyIcon1.BalloonTipText = this.textBox_info.Text;
-                    this.notifyIcon1.ShowBalloonTip(1000);
-                }
+            switch (toolStripStatusLabel_status.Text)
+            {
+                case "Post successful":
+                    ShowBalloonTip(ToolTipIcon.Info, "Post NowPlaying!", this.textBox_info.Text);
+                    break;
+                case "Post failed":
+                    ShowBalloonTip(ToolTipIcon.Error, "Post error!", this.textBox_info.Text);
+                    break;
             }
+        }
+       
+        private void ShowBalloonTip(ToolTipIcon icon, string title, string text, int time = 1000)
+        {
+            this.notifyIcon1.BalloonTipIcon = icon;
+            this.notifyIcon1.BalloonTipTitle = title;
+            this.notifyIcon1.BalloonTipText = text;
+            this.notifyIcon1.ShowBalloonTip(time);
         }
         
         /// <summary>
@@ -341,19 +266,17 @@ namespace foobar4423
         private void Display()
         {
             this.Visible = true;
-
             if (this.WindowState == FormWindowState.Minimized)
             {
                 this.WindowState = FormWindowState.Normal;
             }
-
             this.notifyIcon1.Visible = false;
             this.Activate();
         }
-
+        
+        #endregion
 
 /*******コンテキストメニュー*******/
-
         private void showSToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Display();
@@ -370,5 +293,16 @@ namespace foobar4423
             Application.Exit();
         }
 
+
+/*******ユーティリティ*******/
+        /// <summary>
+        /// 別スレッド上からUIスレッドを操作
+        /// </summary>
+        /// <seealso cref="http://xin9le.net/articles/21"/>
+        private void SyncInvoke(Action action)
+        {
+            if (this.InvokeRequired) this.Invoke(action);
+            else action();
+        }
     }
 }

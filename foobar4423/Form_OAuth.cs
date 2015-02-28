@@ -3,29 +3,21 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using TweetSharp;
 using System.Threading.Tasks;
+using foobar4423.Properties;
 
 namespace foobar4423
 {
     public partial class Form_OAuth : Form
     {
-        private string consumerKey;
-        private string consumerSecret;
-        private string accessToken;
-        private string accessTokenSecret;
-
-        private string screenName;
-
         private TwitterService service;
         private OAuthRequestToken requestToken;
-        
+                
 
         public Form_OAuth()
         {
             InitializeComponent();
-
-            consumerKey = Properties.Resources.CK;
-            consumerSecret = Properties.Resources.CS;
         }
+
 
         private async void button_OAuth_Click(object sender, EventArgs e)
         {
@@ -33,7 +25,7 @@ namespace foobar4423
 
             await Task.Run(() =>
             {
-                service = new TwitterService(consumerKey, consumerSecret);
+                service = new TwitterService(Resources.CK, Resources.CS);
                 requestToken = service.GetRequestToken();
                 Uri uri = service.GetAuthorizationUri(requestToken);
                 Process.Start(uri.ToString());
@@ -50,30 +42,23 @@ namespace foobar4423
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            string pin = textBox_pin.Text;
 
-            OAuthAccessToken access = service.GetAccessToken(requestToken, pin);
-            accessToken = access.Token;
-            accessTokenSecret = access.TokenSecret;
-            screenName = access.ScreenName;
-            service.AuthenticateWith(accessToken, accessTokenSecret);
-            SaveToken();
+            OAuthAccessToken access = service.GetAccessToken(requestToken, textBox_pin.Text);
+            service.AuthenticateWith(access.Token, access.TokenSecret);
+            SaveToken(access);
 
-            MessageBox.Show("Welcom @" + screenName, "Hello", 
+            MessageBox.Show("Welcom @" + access.ScreenName, "Hello", 
                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
             this.Close();
         }
 
-        /// <summary>
-        /// 大事な情報を保存
-        /// </summary>
-        internal void SaveToken()
+        private void SaveToken(OAuthAccessToken access)
         {
-            foobar4423.Properties.Settings.Default.accessToken = accessToken;
-            foobar4423.Properties.Settings.Default.accessTokenSecret = accessTokenSecret;
-            foobar4423.Properties.Settings.Default.screenName = screenName;
+            Settings.Default.AT = access.Token;
+            Settings.Default.ATS = access.TokenSecret;
+            Settings.Default.ScreenName = access.ScreenName;
 
-            Properties.Settings.Default.Save();
+            Settings.Default.Save();
         }
     }
 }
