@@ -139,6 +139,8 @@ namespace foobar4423
             }
             catch (ArgumentException)
             {
+                SyncInvoke(() => 
+                    textBox_info.Text = "");
                 SyncInvoke(() =>
                     toolStripStatusLabel_status.Text = "Cannot generate NowPlaying");
                 return;

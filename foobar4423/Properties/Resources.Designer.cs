@@ -61,6 +61,33 @@ namespace foobar4423.Properties {
         }
         
         /// <summary>
+        ///   $ALBUM$ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string Album {
+            get {
+                return ResourceManager.GetString("Album", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   $ALBUM_ARTIST$ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string AlbumArtist {
+            get {
+                return ResourceManager.GetString("AlbumArtist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   $ARTIST$ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string Artist {
+            get {
+                return ResourceManager.GetString("Artist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   fhtoSvAE9Uaxmnv51Nbalg に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string CK {
@@ -75,6 +102,33 @@ namespace foobar4423.Properties {
         internal static string CS {
             get {
                 return ResourceManager.GetString("CS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   $DISC_NUMBER$ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DiscNum {
+            get {
+                return ResourceManager.GetString("DiscNum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   $SONG$ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   $TRACK_NUMBER$ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TrackNum {
+            get {
+                return ResourceManager.GetString("TrackNum", resourceCulture);
             }
         }
     }

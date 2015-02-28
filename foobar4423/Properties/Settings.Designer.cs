@@ -73,7 +73,8 @@ namespace foobar4423.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\"$SONG$ - $ARTIST$ via $ALBUM$ - $ALBUM_ARTIST$ / $TRACK_NUMBER$ #nowplaying\";")]
+        [global::System.Configuration.DefaultSettingValueAttribute("$SONG$< - $ARTIST$>< via< $ALBUM$>< - $ALBUM_ARTIST$> >< / $TRACK_NUMBER$> #nowpl" +
+            "aying")]
         public string NowPlayingFormat {
             get {
                 return ((string)(this["NowPlayingFormat"]));

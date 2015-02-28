@@ -19,16 +19,16 @@ namespace foobar4423
             var regex = new Regex(RagexPattern(windowTitle));
             this.match = regex.Match(windowTitle);
         }
-        
+
 
         public string Album { get { return match.Groups["ALBUM"].Value; } }
         public string Title { get { return match.Groups["TITLE"].Value; } }
         public string AlbumArtist { get { return match.Groups["ALBUM_ARTIST"].Value; } }
-        public string TrackArtist { get { return match.Groups["ARTIST"].Value; } }
+        public string Artist { get { return match.Groups["ARTIST"].Value; } }
         public string TrackNumber { get { return match.Groups["TRACK_NUMBER"].Value; } }
         public string DiscNumber { get { return match.Groups["DISC_NUMBER"].Value; } }
 
-       
+
         private string RagexPattern(string title)
         {
             string expr = @"((?<ALBUM_ARTIST>.*) - )?\[(?<ALBUM>.*) CD(?<DISC_NUMBER>\d+(/\d+)?) #(?<TRACK_NUMBER>.*)\] (?<TITLE>.*) // (?<ARTIST>.*)";
@@ -45,70 +45,104 @@ namespace foobar4423
             var regex = new Regex(@" CD(\d+(/\d+)?)");
             if (!regex.Match(title).Success)
                 expr = expr.Replace(@" CD(?<DISC_NUMBER>\d+(/\d+)?)", "");
-            
+
             //アルバムが発見されなかったら
             if (title.IndexOf(@"[") == -1)
                 expr = expr.Replace(@"(?<ALBUM>.*)", "");
 
             //[]が発見されたら
             if (expr.IndexOf(@"\[\]") != -1)
-                expr = expr.Replace(@"\[\] ", "");            
+                expr = expr.Replace(@"\[\] ", "");
 
             return expr.Trim();
         }
-        
+
 
         public string Format(string format)
         {
-            return format.Replace("$SONG$", Title)
-                        .Replace("$ARTIST$", TrackArtist)
-                        .Replace("$ALBUM$", Album)
-                        .Replace("$ALBUM_ARTIST$", AlbumArtist)
-                        .Replace("$TRACK_NUMBER$", TrackNumber)
-                        .Replace("$DISC_NUMBER$", DiscNumber);
+            do
+            {
+                format = Parse(format);
+            } while (regex.Match(format).Groups["Close"].Value != "");
+
+            format = Utility.RemoveContinuousWhiteSpace(format);
+            return    format.Replace(Resources.Title,       Title)
+                            .Replace(Resources.Artist,      Artist)
+                            .Replace(Resources.Album,       Album)
+                            .Replace(Resources.AlbumArtist, AlbumArtist)
+                            .Replace(Resources.TrackNum,    TrackNumber)
+                            .Replace(Resources.DiscNum,     DiscNumber)
+                            .Replace("via #nowplaying", "#nowplaying");
         }
-        
+
         public string Format() { return Format(DefaultFormat); }
 
-        public static readonly string DefaultFormat = @"$SONG$ - $ARTIST$ via $ALBUM$ - $ALBUM_ARTIST$ / $TRACK_NUMBER$ #nowplaying";
+        public static readonly string DefaultFormat = @"$SONG$< - $ARTIST$>< via< $ALBUM$>< - $ALBUM_ARTIST$> >< / $TRACK_NUMBER$> #nowplaying";
 
-        /*
 
         /// <summary>
-        /// ウィンドウタイトルから情報を抽出し
-        /// なうぷれのフォーマットに整える
+        /// 曲情報が存在しないときに「 - Artist」みたいな指定をするとゴミが残るので
+        /// 曲情報とオマケをグループ化して、曲情報がないならオマケも表示させないようにするメソッド。
+        /// グループ化には"<" ">"を使用。
         /// </summary>
-        /// <param name="title">foobarのウィンドウタイトル</param>
-        /// <returns>tweetする文字列</returns>
-        internal string GenerateTweetString(string title, string format)
+        /// <param name="target"></param>
+        /// <returns></returns>
+        private string Parse(string target)
         {
+            string text = target;
 
-            //フォーマットに置き換え
-            format = format.Replace("$SONG$", SONG);
+            var match = regex.Match(target);
+            if (match.Groups["Close"].Value != "")
+            {
+                text = Parse(match.Groups["Close"].Value);
+            }
+            else
+            {
+                return ReplaceToSongInfo(target);
+            }
 
-            if (ARTIST == "") format = format.Replace(" - $ARTIST$", "");
-            format = format.Replace("$ARTIST$", ARTIST);
-
-            if (ALBUM == "" && ALBUM_ARTIST == "")
-                format = format.Replace(" via $ALBUM$ - $ALBUM_ARTIST$", "");
-            else if (ALBUM == "") format = format.Replace(" $ALBUM$ -", "");
-            else if (ALBUM_ARTIST == "") format = format.Replace(" - $ALBUM_ARTIST$", "");
-
-            format = format.Replace("$ALBUM$", ALBUM);
-            format = format.Replace("$ALBUM_ARTIST$", ALBUM_ARTIST);
-
-            if (TRACK_NUMBER == "") format = format.Replace(" / $TRACK_NUMBER$", "");
-            format = format.Replace("$TRACK_NUMBER$", TRACK_NUMBER);
-
-
-            tweetString = format;
-
-
-            return tweetString;
+            return target.Replace("<" + match.Groups["Close"].Value + ">", text);
         }
-         
-        */ 
 
+        Regex regex = new Regex(@"^[^<>]*(((?'Open'<)[^<>]*)+((?'Close-Open'>)[^<>]*)+)*(?(Open)(?!))$");
+
+        /// <summary>
+        /// 各曲情報に値が存在すれば、その情報に置換する。
+        /// 存在しない場合は空文字を返す。
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        private string ReplaceToSongInfo(string target)
+        {
+            if (target.IsFind(Resources.TrackNum))
+            {
+                return String.IsNullOrEmpty(TrackNumber) ? "" : target.Replace(Resources.TrackNum, TrackNumber);
+            }
+            else if (target.IsFind(Resources.AlbumArtist))
+            {
+                return String.IsNullOrEmpty(AlbumArtist) ? "" : target.Replace(Resources.AlbumArtist, AlbumArtist);
+            }
+            else if (target.IsFind(Resources.Album))
+            {
+                return String.IsNullOrEmpty(Album) ? "" : target.Replace(Resources.Album, Album);
+            }
+            else if (target.IsFind(Resources.Artist))
+            {
+                return String.IsNullOrEmpty(Artist) ? "" : target.Replace(Resources.Artist, Artist);
+            }
+            else if (target.IsFind(Resources.DiscNum))
+            {
+                return String.IsNullOrEmpty(DiscNumber) ? "" : target.Replace(Resources.DiscNum, DiscNumber);
+            }
+            else if (target.IsFind(Resources.Title))
+            {
+                return String.IsNullOrEmpty(Title) ? "" : target.Replace(Resources.Title, Title);
+            }
+            else
+            {
+                return "";
+            }
+        }
 
     }
 }

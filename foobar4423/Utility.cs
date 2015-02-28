@@ -8,7 +8,7 @@ namespace foobar4423
     public static class Utility
     {
         /// <summary>
-        /// foobarのウィンドウタイトルを取得
+        /// foobarのウィンドウタイトルを取得します。
         /// </summary>
         /// <returns></returns>
         public static string FoobarWindowTitle(string filePath, string processName = "foobar2000")
@@ -35,5 +35,16 @@ namespace foobar4423
             return str;
         }
 
+
+        /// <summary>
+        /// この文字列に、指定された文字列が存在するかどうかを返します。
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        static public bool IsFind(this string target, string value)
+        {
+            return target.IndexOf(value) != -1;
+        }
     }
 }
