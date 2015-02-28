@@ -11,7 +11,6 @@ namespace foobar4423
     public partial class Form1 : Form
     {
         private TwitterService service; 
-        private NowPlayingFormat npf = new NowPlayingFormat();
 
         private string ScreenName
         {
@@ -113,6 +112,7 @@ namespace foobar4423
         /// </summary>
         private void GetNowPlaying()
         {
+            //ウィンドウタイトル取得
             string windowTitle;
             try
             {
@@ -123,26 +123,29 @@ namespace foobar4423
                 SyncInvoke(() => toolStripStatusLabel_status.Text = ex.Message);
                 return;
             }
-
             if (windowTitle == null)
             {
                 SyncInvoke(() => 
                     toolStripStatusLabel_status.Text = "Cannot detect foobar2000");
                 return;
             }
-            
 
-            string nowPlayingText = npf.GenerateTweetString(windowTitle, Settings.Default.NowPlayingFormat);
-            if (nowPlayingText == "foobar2000")
+            //なうぷれ生成
+            string nowPlayingText = "";
+            try
             {
-                SyncInvoke(() => 
+                NowPlaying np = new NowPlaying(windowTitle);
+                nowPlayingText = np.Format(Settings.Default.NowPlayingFormat);
+            }
+            catch (ArgumentException)
+            {
+                SyncInvoke(() =>
                     toolStripStatusLabel_status.Text = "Cannot generate NowPlaying");
                 return;
             }
-
-            SyncInvoke(() => 
-                textBox_info.Text = Utility.RemoveContinuousWhiteSpace(nowPlayingText));
-            SyncInvoke(() => 
+            SyncInvoke(() =>
+                    textBox_info.Text = Utility.RemoveContinuousWhiteSpace(nowPlayingText));
+            SyncInvoke(() =>
                 toolStripStatusLabel_status.Text = "Successful to generate NowPlaying");
         }
 
