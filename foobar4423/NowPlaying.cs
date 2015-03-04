@@ -77,7 +77,7 @@ namespace foobar4423
 
         public string Format() { return Format(DefaultFormat); }
 
-        public static readonly string DefaultFormat = @"$SONG$< - $ARTIST$>< via< $ALBUM$>< - $ALBUM_ARTIST$> >< / $TRACK_NUMBER$> #nowplaying";
+        public static readonly string DefaultFormat = Resources.DefaultFormat;
 
 
         /// <summary>

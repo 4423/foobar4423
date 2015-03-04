@@ -60,18 +60,20 @@
             // 
             // textBox_info
             // 
-            this.textBox_info.Location = new System.Drawing.Point(12, 38);
+            this.textBox_info.Location = new System.Drawing.Point(24, 79);
+            this.textBox_info.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.textBox_info.Multiline = true;
             this.textBox_info.Name = "textBox_info";
-            this.textBox_info.Size = new System.Drawing.Size(412, 64);
+            this.textBox_info.Size = new System.Drawing.Size(824, 129);
             this.textBox_info.TabIndex = 0;
             this.textBox_info.TextChanged += new System.EventHandler(this.textBox_info_TextChanged);
             // 
             // button_post
             // 
-            this.button_post.Location = new System.Drawing.Point(349, 108);
+            this.button_post.Location = new System.Drawing.Point(698, 225);
+            this.button_post.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.button_post.Name = "button_post";
-            this.button_post.Size = new System.Drawing.Size(75, 23);
+            this.button_post.Size = new System.Drawing.Size(150, 48);
             this.button_post.TabIndex = 1;
             this.button_post.Text = "Post";
             this.button_post.UseVisualStyleBackColor = true;
@@ -87,8 +89,9 @@
             this.toolStripTextBox_screenName});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(6, 4, 0, 4);
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip1.Size = new System.Drawing.Size(436, 26);
+            this.menuStrip1.Size = new System.Drawing.Size(872, 44);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -101,37 +104,37 @@
             this.toolStripSeparator2,
             this.ToolStripMenuItem_Exit});
             this.sDKじゃあのToolStripMenuItem.Name = "sDKじゃあのToolStripMenuItem";
-            this.sDKじゃあのToolStripMenuItem.Size = new System.Drawing.Size(57, 22);
+            this.sDKじゃあのToolStripMenuItem.Size = new System.Drawing.Size(90, 36);
             this.sDKじゃあのToolStripMenuItem.Text = "File(&F)";
             // 
             // ToolStripMenuItem_OAuth
             // 
             this.ToolStripMenuItem_OAuth.Name = "ToolStripMenuItem_OAuth";
-            this.ToolStripMenuItem_OAuth.Size = new System.Drawing.Size(131, 22);
+            this.ToolStripMenuItem_OAuth.Size = new System.Drawing.Size(190, 36);
             this.ToolStripMenuItem_OAuth.Text = "OAuth(&O)";
             this.ToolStripMenuItem_OAuth.Click += new System.EventHandler(this.ToolStripMenuItem_OAuth_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(128, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(187, 6);
             // 
             // toolStripMenuItem_Config
             // 
             this.toolStripMenuItem_Config.Name = "toolStripMenuItem_Config";
-            this.toolStripMenuItem_Config.Size = new System.Drawing.Size(131, 22);
+            this.toolStripMenuItem_Config.Size = new System.Drawing.Size(190, 36);
             this.toolStripMenuItem_Config.Text = "Config(&C)";
             this.toolStripMenuItem_Config.Click += new System.EventHandler(this.toolStripMenuItem_Config_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(128, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(187, 6);
             // 
             // ToolStripMenuItem_Exit
             // 
             this.ToolStripMenuItem_Exit.Name = "ToolStripMenuItem_Exit";
-            this.ToolStripMenuItem_Exit.Size = new System.Drawing.Size(131, 22);
+            this.ToolStripMenuItem_Exit.Size = new System.Drawing.Size(190, 36);
             this.ToolStripMenuItem_Exit.Text = "Exit(&E)";
             this.ToolStripMenuItem_Exit.Click += new System.EventHandler(this.ToolStripMenuItem_Exit_Click);
             // 
@@ -143,7 +146,7 @@
             this.toolStripTextBox_screenName.Margin = new System.Windows.Forms.Padding(1, 0, 13, 0);
             this.toolStripTextBox_screenName.Name = "toolStripTextBox_screenName";
             this.toolStripTextBox_screenName.ReadOnly = true;
-            this.toolStripTextBox_screenName.Size = new System.Drawing.Size(250, 22);
+            this.toolStripTextBox_screenName.Size = new System.Drawing.Size(500, 36);
             this.toolStripTextBox_screenName.Text = "Please OAuth authentication and config!";
             this.toolStripTextBox_screenName.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -155,9 +158,10 @@
             this.toolStripStatusLabel_status,
             this.toolStripStatusLabel2,
             this.toolStripStatusLabel_count});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 140);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 303);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(436, 23);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 28, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(872, 37);
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
@@ -165,37 +169,37 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(51, 18);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(84, 32);
             this.toolStripStatusLabel1.Text = "Status:";
             // 
             // toolStripStatusLabel_status
             // 
             this.toolStripStatusLabel_status.Name = "toolStripStatusLabel_status";
-            this.toolStripStatusLabel_status.Size = new System.Drawing.Size(279, 18);
+            this.toolStripStatusLabel_status.Size = new System.Drawing.Size(631, 32);
             this.toolStripStatusLabel_status.Spring = true;
             this.toolStripStatusLabel_status.Text = "　　　";
             this.toolStripStatusLabel_status.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolStripStatusLabel_status.TextChanged += new System.EventHandler(this.toolStripStatusLabel_status_TextChanged);
             // 
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(47, 18);
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(85, 32);
             this.toolStripStatusLabel2.Text = "Count:";
             // 
             // toolStripStatusLabel_count
             // 
             this.toolStripStatusLabel_count.Name = "toolStripStatusLabel_count";
-            this.toolStripStatusLabel_count.Size = new System.Drawing.Size(23, 18);
+            this.toolStripStatusLabel_count.Size = new System.Drawing.Size(42, 32);
             this.toolStripStatusLabel_count.Text = "  0";
             this.toolStripStatusLabel_count.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // checkBox_autoPost
             // 
             this.checkBox_autoPost.AutoSize = true;
-            this.checkBox_autoPost.Location = new System.Drawing.Point(12, 112);
+            this.checkBox_autoPost.Location = new System.Drawing.Point(24, 233);
+            this.checkBox_autoPost.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.checkBox_autoPost.Name = "checkBox_autoPost";
-            this.checkBox_autoPost.Size = new System.Drawing.Size(71, 16);
+            this.checkBox_autoPost.Size = new System.Drawing.Size(131, 29);
             this.checkBox_autoPost.TabIndex = 4;
             this.checkBox_autoPost.Text = "AutoPost";
             this.checkBox_autoPost.UseVisualStyleBackColor = true;
@@ -203,9 +207,10 @@
             // 
             // button_getNowPlaying
             // 
-            this.button_getNowPlaying.Location = new System.Drawing.Point(245, 108);
+            this.button_getNowPlaying.Location = new System.Drawing.Point(490, 225);
+            this.button_getNowPlaying.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.button_getNowPlaying.Name = "button_getNowPlaying";
-            this.button_getNowPlaying.Size = new System.Drawing.Size(98, 23);
+            this.button_getNowPlaying.Size = new System.Drawing.Size(196, 48);
             this.button_getNowPlaying.TabIndex = 5;
             this.button_getNowPlaying.Text = "Get NowPlaying";
             this.button_getNowPlaying.UseVisualStyleBackColor = true;
@@ -234,34 +239,34 @@
             this.exitEToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.ShowImageMargin = false;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(165, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(270, 112);
             // 
             // showSToolStripMenuItem
             // 
             this.showSToolStripMenuItem.Name = "showSToolStripMenuItem";
-            this.showSToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.showSToolStripMenuItem.Size = new System.Drawing.Size(269, 36);
             this.showSToolStripMenuItem.Text = "Show(&S)";
             this.showSToolStripMenuItem.Click += new System.EventHandler(this.showSToolStripMenuItem_Click);
             // 
             // postNowPlayingPToolStripMenuItem
             // 
             this.postNowPlayingPToolStripMenuItem.Name = "postNowPlayingPToolStripMenuItem";
-            this.postNowPlayingPToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.postNowPlayingPToolStripMenuItem.Size = new System.Drawing.Size(269, 36);
             this.postNowPlayingPToolStripMenuItem.Text = "Post NowPlaying(&P)";
             this.postNowPlayingPToolStripMenuItem.Click += new System.EventHandler(this.postNowPlayingPToolStripMenuItem_Click);
             // 
             // exitEToolStripMenuItem
             // 
             this.exitEToolStripMenuItem.Name = "exitEToolStripMenuItem";
-            this.exitEToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.exitEToolStripMenuItem.Size = new System.Drawing.Size(269, 36);
             this.exitEToolStripMenuItem.Text = "Close(&C)";
             this.exitEToolStripMenuItem.Click += new System.EventHandler(this.exitEToolStripMenuItem_Click);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(436, 163);
+            this.ClientSize = new System.Drawing.Size(872, 340);
             this.Controls.Add(this.button_getNowPlaying);
             this.Controls.Add(this.checkBox_autoPost);
             this.Controls.Add(this.statusStrip1);
@@ -271,6 +276,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "foobar4423";

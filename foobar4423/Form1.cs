@@ -17,7 +17,7 @@ namespace foobar4423
             get
             {
                 string screenName = Settings.Default.ScreenName;
-                return (screenName == string.Empty) ? screenName : "@" + screenName;
+                return (screenName == string.Empty) ? Resources.Form_InitialMessage : "@" + screenName;
             }
         }
 
@@ -31,7 +31,7 @@ namespace foobar4423
                 service.AuthenticateWith(Settings.Default.AT, Settings.Default.ATS);
             }
             catch (Exception) {
-                SyncInvoke(() => toolStripStatusLabel_status.Text = "Cannot recognize the token");
+                SyncInvoke(() => toolStripStatusLabel_status.Text = "Token cannot be recognized.");
             }
 
             toolStripTextBox_screenName.Text = ScreenName;
@@ -52,6 +52,7 @@ namespace foobar4423
             fo.ShowDialog();
 
             toolStripTextBox_screenName.Text = ScreenName;
+            service.AuthenticateWith(Settings.Default.AT, Settings.Default.ATS);
         }
 
         private void ToolStripMenuItem_Exit_Click(object sender, EventArgs e)
@@ -59,7 +60,7 @@ namespace foobar4423
             Application.Exit();
         }
 
-       
+
 /*******ツイート*******/
         /// <summary>
         /// textBoxのなうぷれをツイート
@@ -70,26 +71,31 @@ namespace foobar4423
             if (tweetStr == string.Empty)
             {
                 SyncInvoke(() => 
-                    toolStripStatusLabel_status.Text = "Post number of characters is 0");
+                    toolStripStatusLabel_status.Text = "The number of characters is 0.");
                 return;
             }
 
-
+            TwitterStatus status = new TwitterStatus();
             try
             {
-                var isSuccess = service.SendTweet(new SendTweetOptions { Status = tweetStr });
-
-                if (isSuccess != null)
-                    SyncInvoke(() =>
-                        toolStripStatusLabel_status.Text = "Post successful");
-                else
-                    SyncInvoke(() =>
-                        toolStripStatusLabel_status.Text = "Post failed");
+                status = service.SendTweet(new SendTweetOptions { Status = tweetStr });
             }
             catch (Exception ex)
             {
+                SyncInvoke(() => toolStripStatusLabel_status.Text = ex.Message);
+            }
+
+            if (status != null)
+            {
                 SyncInvoke(() =>
-                    toolStripStatusLabel_status.Text = ex.Message);
+                    toolStripStatusLabel_status.Text = "Post succeeded.");
+                ShowBalloonTip(ToolTipIcon.Info, "Post succeeded.", this.textBox_info.Text);
+            }
+            else
+            {
+                SyncInvoke(() =>
+                    toolStripStatusLabel_status.Text = "Post failed.");
+                ShowBalloonTip(ToolTipIcon.Error, "Post failed.", this.textBox_info.Text);
             }
         }
 
@@ -126,7 +132,7 @@ namespace foobar4423
             if (windowTitle == null)
             {
                 SyncInvoke(() => 
-                    toolStripStatusLabel_status.Text = "Cannot detect foobar2000");
+                    toolStripStatusLabel_status.Text = "foobar2000 cannot be detected.");
                 return;
             }
 
@@ -139,16 +145,16 @@ namespace foobar4423
             }
             catch (ArgumentException)
             {
-                SyncInvoke(() => 
-                    textBox_info.Text = "");
+                SyncInvoke(() => textBox_info.Text = "");
                 SyncInvoke(() =>
-                    toolStripStatusLabel_status.Text = "Cannot generate NowPlaying");
+                    toolStripStatusLabel_status.Text = "NowPlaying cannot be generated.");
                 return;
             }
             SyncInvoke(() =>
                     textBox_info.Text = Utility.RemoveContinuousWhiteSpace(nowPlayingText));
             SyncInvoke(() =>
-                toolStripStatusLabel_status.Text = "Successful to generate NowPlaying");
+                toolStripStatusLabel_status.Text = "Successful to generate NowPlaying.");
+            SyncInvoke(() => Application.DoEvents());
         }
 
 
@@ -195,9 +201,16 @@ namespace foobar4423
         {
             timer1.Stop();
 
-            //TODO 例外処理 もともとgetwindowtitle()
-            string windowTitle = Utility.FoobarWindowTitle(Settings.Default.FoobarFilePath); ;
-            
+            string windowTitle;
+            try {
+                windowTitle = Utility.FoobarWindowTitle(Settings.Default.FoobarFilePath); ;
+            }
+            catch (Exception ex)
+            {
+                SyncInvoke(() => toolStripStatusLabel_status.Text = ex.Message);
+                return;
+            }
+
             //AutoPostチェック初回は回避
             if (isAutoPostFirstTime)
             {
@@ -242,27 +255,20 @@ namespace foobar4423
             Display();
         }
        
-        private void toolStripStatusLabel_status_TextChanged(object sender, EventArgs e)
+        private async void ShowBalloonTip(ToolTipIcon icon, string title, string text, int time = 1000)
         {
             if (!Settings.Default.IsBalloon) return;
-
-            switch (toolStripStatusLabel_status.Text)
-            {
-                case "Post successful":
-                    ShowBalloonTip(ToolTipIcon.Info, "Post NowPlaying!", this.textBox_info.Text);
-                    break;
-                case "Post failed":
-                    ShowBalloonTip(ToolTipIcon.Error, "Post error!", this.textBox_info.Text);
-                    break;
-            }
-        }
-       
-        private void ShowBalloonTip(ToolTipIcon icon, string title, string text, int time = 1000)
-        {
+            
             this.notifyIcon1.BalloonTipIcon = icon;
             this.notifyIcon1.BalloonTipTitle = title;
             this.notifyIcon1.BalloonTipText = text;
-            this.notifyIcon1.ShowBalloonTip(time);
+            await Task.Run(() =>
+                SyncInvoke(() =>
+                {
+                    this.notifyIcon1.ShowBalloonTip(time);
+                    Application.DoEvents();
+                }
+            ));
         }
         
         /// <summary>
