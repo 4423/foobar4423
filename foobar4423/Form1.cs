@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Windows;
 using TweetSharp;
 using foobar4423.Properties;
+using NowPlayingLib;
 
 namespace foobar4423
 {
@@ -31,7 +32,7 @@ namespace foobar4423
                 service.AuthenticateWith(Settings.Default.AT, Settings.Default.ATS);
             }
             catch (Exception) {
-                SyncInvoke(() => toolStripStatusLabel_status.Text = "Cannot recognize the token");
+                SyncInvoke(() => toolStripStatusLabel_status.Text = "Faild to recognize the token");
             }
 
             toolStripTextBox_screenName.Text = ScreenName;
@@ -66,25 +67,11 @@ namespace foobar4423
         /// </summary>
         private void PostNowPlaying()
         {
-            string tweetStr = textBox_info.Text;
-            if (tweetStr == string.Empty)
-            {
-                SyncInvoke(() => 
-                    toolStripStatusLabel_status.Text = "Post number of characters is 0");
-                return;
-            }
-
-
             try
             {
-                var isSuccess = service.SendTweet(new SendTweetOptions { Status = tweetStr });
-
-                if (isSuccess != null)
-                    SyncInvoke(() =>
-                        toolStripStatusLabel_status.Text = "Post successful");
-                else
-                    SyncInvoke(() =>
-                        toolStripStatusLabel_status.Text = "Post failed");
+                var isSuccess = service.SendTweet(new SendTweetOptions { Status = textBox_info.Text });
+                SyncInvoke(() =>
+                    toolStripStatusLabel_status.Text = isSuccess != null ? "Success!" : "Failed to post the tweet");
             }
             catch (Exception ex)
             {
@@ -110,47 +97,37 @@ namespace foobar4423
         /// <summary>
         /// なうぷれを取得
         /// </summary>
-        private void GetNowPlaying()
+        private async void GetNowPlaying()
         {
-            //ウィンドウタイトル取得
-            string windowTitle;
-            try
+            IMediaPlayer player = new NowPlayingLib.Foobar2000();
+            var p = player as INotifyPlayerStateChanged;
+            if (p != null)
             {
-                windowTitle = Utility.FoobarWindowTitle(Settings.Default.FoobarFilePath);
+                p.CurrentMediaChanged += SetCurrentMedia;
             }
-            catch (Exception ex)
-            {
-                SyncInvoke(() => toolStripStatusLabel_status.Text = ex.Message);
-                return;
-            }
-            if (windowTitle == null)
-            {
-                SyncInvoke(() => 
-                    toolStripStatusLabel_status.Text = "Cannot detect foobar2000");
-                return;
-            }
+            SetCurrentMedia(player, new CurrentMediaChangedEventArgs(await player.GetCurrentMedia()));            
+        }
 
-            //なうぷれ生成
-            string nowPlayingText = "";
-            try
-            {
-                NowPlaying np = new NowPlaying(windowTitle);
-                nowPlayingText = np.Format(Settings.Default.NowPlayingFormat);
+        private void SetCurrentMedia(object sender, CurrentMediaChangedEventArgs e)
+        {
+            try {
+                // なうぷれ取得
+                string text = NowPlayingParser.Parse(Settings.Default.NowPlayingFormat, e.CurrentMedia);
+                SyncInvoke(() =>
+                {
+                    textBox_info.Text = text;
+                    toolStripStatusLabel_status.Text = "Success!";
+                });
             }
             catch (ArgumentException)
             {
-                SyncInvoke(() => 
-                    textBox_info.Text = "");
                 SyncInvoke(() =>
-                    toolStripStatusLabel_status.Text = "Cannot generate NowPlaying");
-                return;
+                {
+                    textBox_info.Text = "";
+                    toolStripStatusLabel_status.Text = "Faild to generate NowPlaying";
+                });
             }
-            SyncInvoke(() =>
-                    textBox_info.Text = Utility.RemoveContinuousWhiteSpace(nowPlayingText));
-            SyncInvoke(() =>
-                toolStripStatusLabel_status.Text = "Successful to generate NowPlaying");
         }
-
 
         private async void button_getNowPlaying_Click(object sender, EventArgs e)
         {
@@ -164,7 +141,10 @@ namespace foobar4423
 
         private void textBox_info_TextChanged(object sender, EventArgs e)
         {
-            toolStripStatusLabel_count.Text = textBox_info.Text.Length.ToString().PadLeft(3);
+            int length = textBox_info.Text.Length;
+            toolStripStatusLabel_count.Text = length.ToString().PadLeft(3);
+
+            this.button_post.Enabled = length > 0;            
         }
 
 
@@ -248,11 +228,11 @@ namespace foobar4423
 
             switch (toolStripStatusLabel_status.Text)
             {
-                case "Post successful":
+                case "Success!":
                     ShowBalloonTip(ToolTipIcon.Info, "Post NowPlaying!", this.textBox_info.Text);
                     break;
-                case "Post failed":
-                    ShowBalloonTip(ToolTipIcon.Error, "Post error!", this.textBox_info.Text);
+                case "Failed to post the tweet":
+                    ShowBalloonTip(ToolTipIcon.Error, "Faild to post the tweet", this.textBox_info.Text);
                     break;
             }
         }

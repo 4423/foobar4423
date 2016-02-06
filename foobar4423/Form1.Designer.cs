@@ -69,6 +69,7 @@
             // 
             // button_post
             // 
+            this.button_post.Enabled = false;
             this.button_post.Location = new System.Drawing.Point(349, 108);
             this.button_post.Name = "button_post";
             this.button_post.Size = new System.Drawing.Size(75, 23);
@@ -171,7 +172,7 @@
             // toolStripStatusLabel_status
             // 
             this.toolStripStatusLabel_status.Name = "toolStripStatusLabel_status";
-            this.toolStripStatusLabel_status.Size = new System.Drawing.Size(279, 18);
+            this.toolStripStatusLabel_status.Size = new System.Drawing.Size(300, 18);
             this.toolStripStatusLabel_status.Spring = true;
             this.toolStripStatusLabel_status.Text = "　　　";
             this.toolStripStatusLabel_status.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
