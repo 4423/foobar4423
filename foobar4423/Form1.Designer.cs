@@ -47,6 +47,7 @@
             this.toolStripStatusLabel_count = new System.Windows.Forms.ToolStripStatusLabel();
             this.checkBox_autoPost = new System.Windows.Forms.CheckBox();
             this.button_getNowPlaying = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -211,6 +212,11 @@
             this.button_getNowPlaying.UseVisualStyleBackColor = true;
             this.button_getNowPlaying.Click += new System.EventHandler(this.button_getNowPlaying_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // notifyIcon1
             // 
             this.notifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
@@ -298,6 +304,7 @@
         private System.Windows.Forms.Button button_getNowPlaying;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_count;
+        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox_screenName;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;

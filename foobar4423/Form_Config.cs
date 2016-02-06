@@ -75,7 +75,7 @@ namespace foobar4423
 
         private void button_reset_Click(object sender, EventArgs e)
         {
-            //textBox_format.Text = Resources.DefaultFormat;
+            textBox_format.Text = NowPlaying.DefaultFormat;
         }
     }
 }
