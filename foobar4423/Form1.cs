@@ -11,7 +11,8 @@ namespace foobar4423
 {
     public partial class Form1 : Form
     {
-        private TwitterService service; 
+        private TwitterService service;
+        private IMediaPlayer player = new Foobar2000();
 
         private string ScreenName
         {
@@ -27,6 +28,8 @@ namespace foobar4423
         {
             InitializeComponent();
 
+            Application.ApplicationExit += (_, __) => this.notifyIcon1.Dispose();
+            
             try {
                 service = new TwitterService(Resources.CK, Resources.CS);
                 service.AuthenticateWith(Settings.Default.AT, Settings.Default.ATS);
@@ -99,12 +102,6 @@ namespace foobar4423
         /// </summary>
         private async void GetNowPlaying()
         {
-            IMediaPlayer player = new NowPlayingLib.Foobar2000();
-            var p = player as INotifyPlayerStateChanged;
-            if (p != null)
-            {
-                p.CurrentMediaChanged += SetCurrentMedia;
-            }
             SetCurrentMedia(player, new CurrentMediaChangedEventArgs(await player.GetCurrentMedia()));            
         }
 
@@ -146,63 +143,24 @@ namespace foobar4423
 
             this.button_post.Enabled = length > 0;            
         }
+        
 
-
-        #region "  AutoPost  "
-
-        private bool isAutoPostFirstTime = false;
         private void checkBox_autoPost_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox_autoPost.Checked)
+            var p = this.player as INotifyPlayerStateChanged;
+            if (p != null)
             {
-                isAutoPostFirstTime = true;
-                timer1.Enabled = true;
-            }
-            else
-            {
-                timer1.Enabled = false;
+                if (checkBox_autoPost.Checked)
+                {
+                    p.CurrentMediaChanged += SetCurrentMedia;
+                }
+                else
+                {
+                    p.CurrentMediaChanged -= SetCurrentMedia;
+                }
             }
         }
-
-
-        private string preWindowTitle;
-        /// <summary>
-        /// 指定された時間が経過後に実行
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            timer1.Stop();
-
-            //TODO 例外処理 もともとgetwindowtitle()
-            string windowTitle = Utility.FoobarWindowTitle(Settings.Default.FoobarFilePath); ;
-            
-            //AutoPostチェック初回は回避
-            if (isAutoPostFirstTime)
-            {
-                preWindowTitle = windowTitle;
-                isAutoPostFirstTime = false;
-                timer1.Start();
-                return;
-            }
-
-            //前回と同じ||タイトルを取得できない なら何もしない
-            if (preWindowTitle == windowTitle || String.IsNullOrEmpty(windowTitle))
-            {
-                timer1.Start();
-                return;
-            }
-            preWindowTitle = windowTitle;
-
-            //投稿
-            GetNowPlaying();
-            PostNowPlaying();
-            
-            timer1.Start();
-        }
-
-        #endregion
+        
 
         #region "  通知領域  "
 
@@ -288,6 +246,11 @@ namespace foobar4423
         {
             if (this.InvokeRequired) this.Invoke(action);
             else action();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
         }
     }
 }
