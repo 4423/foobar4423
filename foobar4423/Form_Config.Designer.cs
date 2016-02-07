@@ -33,9 +33,9 @@
             this.button_filePath = new System.Windows.Forms.Button();
             this.textBox_filePath = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.checkBox_balloon = new System.Windows.Forms.CheckBox();
             this.button_reset = new System.Windows.Forms.Button();
-            this.button_help = new System.Windows.Forms.Button();
             this.textBox_format = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.button_save = new System.Windows.Forms.Button();
@@ -85,9 +85,9 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.linkLabel1);
             this.groupBox2.Controls.Add(this.checkBox_balloon);
             this.groupBox2.Controls.Add(this.button_reset);
-            this.groupBox2.Controls.Add(this.button_help);
             this.groupBox2.Controls.Add(this.textBox_format);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Location = new System.Drawing.Point(12, 102);
@@ -96,6 +96,17 @@
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "foobar4423";
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(208, 21);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(26, 12);
+            this.linkLabel1.TabIndex = 5;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "help";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // checkBox_balloon
             // 
@@ -116,16 +127,6 @@
             this.button_reset.Text = "reset";
             this.button_reset.UseVisualStyleBackColor = true;
             this.button_reset.Click += new System.EventHandler(this.button_reset_Click);
-            // 
-            // button_help
-            // 
-            this.button_help.Location = new System.Drawing.Point(199, 18);
-            this.button_help.Name = "button_help";
-            this.button_help.Size = new System.Drawing.Size(40, 19);
-            this.button_help.TabIndex = 2;
-            this.button_help.Text = "help";
-            this.button_help.UseVisualStyleBackColor = true;
-            this.button_help.Click += new System.EventHandler(this.button_help_Click);
             // 
             // textBox_format
             // 
@@ -202,8 +203,8 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox_format;
-        private System.Windows.Forms.Button button_help;
         private System.Windows.Forms.Button button_reset;
         private System.Windows.Forms.CheckBox checkBox_balloon;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }

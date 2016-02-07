@@ -100,7 +100,7 @@
       <DependentUpon>Form_OAuth.cs</DependentUpon>
     </Compile>
     <Compile Include="NowPlayingParser.cs" />
-    <Compile Include="Utility.cs" />
+    <Compile Include="StringExtension.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

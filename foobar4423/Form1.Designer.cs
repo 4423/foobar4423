@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.textBox_info = new System.Windows.Forms.TextBox();
+            this.TweetText = new System.Windows.Forms.TextBox();
             this.button_post = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.sDKじゃあのToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -39,15 +39,15 @@
             this.toolStripMenuItem_Config = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripMenuItem_Exit = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripTextBox_screenName = new System.Windows.Forms.ToolStripTextBox();
+            this.ScreenNameLabel = new System.Windows.Forms.ToolStripTextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel_status = new System.Windows.Forms.ToolStripStatusLabel();
+            this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel_count = new System.Windows.Forms.ToolStripStatusLabel();
+            this.CountLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.checkBox_autoPost = new System.Windows.Forms.CheckBox();
             this.button_getNowPlaying = new System.Windows.Forms.Button();
-            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.postNowPlayingPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,14 +57,14 @@
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // textBox_info
+            // TweetText
             // 
-            this.textBox_info.Location = new System.Drawing.Point(12, 38);
-            this.textBox_info.Multiline = true;
-            this.textBox_info.Name = "textBox_info";
-            this.textBox_info.Size = new System.Drawing.Size(412, 64);
-            this.textBox_info.TabIndex = 0;
-            this.textBox_info.TextChanged += new System.EventHandler(this.textBox_info_TextChanged);
+            this.TweetText.Location = new System.Drawing.Point(12, 38);
+            this.TweetText.Multiline = true;
+            this.TweetText.Name = "TweetText";
+            this.TweetText.Size = new System.Drawing.Size(412, 64);
+            this.TweetText.TabIndex = 0;
+            this.TweetText.TextChanged += new System.EventHandler(this.textBox_info_TextChanged);
             // 
             // button_post
             // 
@@ -84,7 +84,7 @@
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sDKじゃあのToolStripMenuItem,
-            this.toolStripTextBox_screenName});
+            this.ScreenNameLabel});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -135,26 +135,26 @@
             this.ToolStripMenuItem_Exit.Text = "Exit(&E)";
             this.ToolStripMenuItem_Exit.Click += new System.EventHandler(this.ToolStripMenuItem_Exit_Click);
             // 
-            // toolStripTextBox_screenName
+            // ScreenNameLabel
             // 
-            this.toolStripTextBox_screenName.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripTextBox_screenName.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.toolStripTextBox_screenName.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.toolStripTextBox_screenName.Margin = new System.Windows.Forms.Padding(1, 0, 13, 0);
-            this.toolStripTextBox_screenName.Name = "toolStripTextBox_screenName";
-            this.toolStripTextBox_screenName.ReadOnly = true;
-            this.toolStripTextBox_screenName.Size = new System.Drawing.Size(250, 22);
-            this.toolStripTextBox_screenName.Text = "Please OAuth authentication and config!";
-            this.toolStripTextBox_screenName.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.ScreenNameLabel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.ScreenNameLabel.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.ScreenNameLabel.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ScreenNameLabel.Margin = new System.Windows.Forms.Padding(1, 0, 13, 0);
+            this.ScreenNameLabel.Name = "ScreenNameLabel";
+            this.ScreenNameLabel.ReadOnly = true;
+            this.ScreenNameLabel.Size = new System.Drawing.Size(250, 22);
+            this.ScreenNameLabel.Text = "Please OAuth authentication and config!";
+            this.ScreenNameLabel.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
-            this.toolStripStatusLabel_status,
+            this.StatusLabel,
             this.toolStripStatusLabel2,
-            this.toolStripStatusLabel_count});
+            this.CountLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 140);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(436, 23);
@@ -168,14 +168,13 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(51, 18);
             this.toolStripStatusLabel1.Text = "Status:";
             // 
-            // toolStripStatusLabel_status
+            // StatusLabel
             // 
-            this.toolStripStatusLabel_status.Name = "toolStripStatusLabel_status";
-            this.toolStripStatusLabel_status.Size = new System.Drawing.Size(300, 18);
-            this.toolStripStatusLabel_status.Spring = true;
-            this.toolStripStatusLabel_status.Text = "　　　";
-            this.toolStripStatusLabel_status.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolStripStatusLabel_status.TextChanged += new System.EventHandler(this.toolStripStatusLabel_status_TextChanged);
+            this.StatusLabel.Name = "StatusLabel";
+            this.StatusLabel.Size = new System.Drawing.Size(269, 18);
+            this.StatusLabel.Spring = true;
+            this.StatusLabel.Text = "　　　";
+            this.StatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // toolStripStatusLabel2
             // 
@@ -183,12 +182,12 @@
             this.toolStripStatusLabel2.Size = new System.Drawing.Size(47, 18);
             this.toolStripStatusLabel2.Text = "Count:";
             // 
-            // toolStripStatusLabel_count
+            // CountLabel
             // 
-            this.toolStripStatusLabel_count.Name = "toolStripStatusLabel_count";
-            this.toolStripStatusLabel_count.Size = new System.Drawing.Size(23, 18);
-            this.toolStripStatusLabel_count.Text = "  0";
-            this.toolStripStatusLabel_count.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CountLabel.Name = "CountLabel";
+            this.CountLabel.Size = new System.Drawing.Size(23, 18);
+            this.CountLabel.Text = "  0";
+            this.CountLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // checkBox_autoPost
             // 
@@ -211,14 +210,14 @@
             this.button_getNowPlaying.UseVisualStyleBackColor = true;
             this.button_getNowPlaying.Click += new System.EventHandler(this.button_getNowPlaying_Click);
             // 
-            // notifyIcon1
+            // NotifyIcon
             // 
-            this.notifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
-            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "foobar4423";
-            this.notifyIcon1.Visible = true;
-            this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
+            this.NotifyIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.NotifyIcon.ContextMenuStrip = this.contextMenuStrip1;
+            this.NotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("NotifyIcon.Icon")));
+            this.NotifyIcon.Text = "foobar4423";
+            this.NotifyIcon.Visible = true;
+            this.NotifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
             // contextMenuStrip1
             // 
@@ -261,7 +260,7 @@
             this.Controls.Add(this.checkBox_autoPost);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.button_post);
-            this.Controls.Add(this.textBox_info);
+            this.Controls.Add(this.TweetText);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -282,7 +281,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox_info;
+        private System.Windows.Forms.TextBox TweetText;
         private System.Windows.Forms.Button button_post;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem sDKじゃあのToolStripMenuItem;
@@ -293,13 +292,13 @@
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Exit;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_status;
+        private System.Windows.Forms.ToolStripStatusLabel StatusLabel;
         private System.Windows.Forms.CheckBox checkBox_autoPost;
         private System.Windows.Forms.Button button_getNowPlaying;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_count;
-        private System.Windows.Forms.NotifyIcon notifyIcon1;
-        private System.Windows.Forms.ToolStripTextBox toolStripTextBox_screenName;
+        private System.Windows.Forms.ToolStripStatusLabel CountLabel;
+        private System.Windows.Forms.NotifyIcon NotifyIcon;
+        private System.Windows.Forms.ToolStripTextBox ScreenNameLabel;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem showSToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem postNowPlayingPToolStripMenuItem;

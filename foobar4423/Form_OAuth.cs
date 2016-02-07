@@ -26,7 +26,15 @@ namespace foobar4423
             await Task.Run(() =>
             {
                 service = new TwitterService(Resources.CK, Resources.CS);
-                requestToken = service.GetRequestToken();
+                try
+                {
+                    requestToken = service.GetRequestToken();
+                }
+                catch (ArgumentNullException)
+                {
+                    MessageBox.Show("リクエストトークンが生成できませんでした。\nネットワーク接続を確認して下さい。",
+                        "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 Uri uri = service.GetAuthorizationUri(requestToken);
                 Process.Start(uri.ToString());
             });

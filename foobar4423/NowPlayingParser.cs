@@ -20,7 +20,7 @@ namespace foobar4423
                 format = Walk(format, media);
             } while (regex.Match(format).Groups["Close"].Value != "");
 
-            format = Utility.RemoveContinuousWhiteSpace(format);
+            format = StringExtension.RemoveContinuousWhiteSpace(format);
             return format.Replace(Resources.Title, media.Name)
                             .Replace(Resources.Artist, media.Artist)
                             .Replace(Resources.Album, media.Album)

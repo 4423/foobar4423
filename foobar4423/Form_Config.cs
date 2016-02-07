@@ -1,5 +1,6 @@
 ﻿using foobar4423.Properties;
 using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace foobar4423
@@ -67,15 +68,24 @@ namespace foobar4423
             checkBox_balloon.Checked = Settings.Default.IsBalloon;
         }
 
-        private void button_help_Click(object sender, EventArgs e)
-        {
-            Form_Help fh = new Form_Help();
-            fh.Show();
-        }
-
         private void button_reset_Click(object sender, EventArgs e)
         {
-            //textBox_format.Text = NowPlaying.DefaultFormat;
+            var result = MessageBox.Show("フォーマットを初期設定に戻しますか?", "確認",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                textBox_format.Text = Resources.DefaultFormat;
+            }
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var result = MessageBox.Show("Webページを表示します。", "確認",
+                MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (result == DialogResult.OK)
+            {
+                Process.Start(Resources.HelpUrl);
+            }
         }
     }
 }

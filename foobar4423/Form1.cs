@@ -6,6 +6,7 @@ using System.Windows;
 using TweetSharp;
 using foobar4423.Properties;
 using NowPlayingLib;
+using System.Diagnostics;
 
 namespace foobar4423
 {
@@ -28,17 +29,17 @@ namespace foobar4423
         {
             InitializeComponent();
 
-            Application.ApplicationExit += (_,__)=>this.notifyIcon1.Dispose();
+            Application.ApplicationExit += (_, __) => this.NotifyIcon.Dispose();
 
             try {
                 service = new TwitterService(Resources.CK, Resources.CS);
                 service.AuthenticateWith(Settings.Default.AT, Settings.Default.ATS);
             }
             catch (Exception) {
-                SyncInvoke(() => toolStripStatusLabel_status.Text = "Faild to recognize the token");
+                StatusLabel.Text = "Faild to recognize the token";
             }
 
-            toolStripTextBox_screenName.Text = ScreenName;
+            ScreenNameLabel.Text = ScreenName;
         }
 
 
@@ -55,7 +56,8 @@ namespace foobar4423
             Form_OAuth fo = new Form_OAuth();
             fo.ShowDialog();
 
-            toolStripTextBox_screenName.Text = ScreenName;
+            ScreenNameLabel.Text = ScreenName;
+            service.AuthenticateWith(Settings.Default.AT, Settings.Default.ATS);
         }
 
         private void ToolStripMenuItem_Exit_Click(object sender, EventArgs e)
@@ -72,17 +74,29 @@ namespace foobar4423
         {
             try
             {
-                var isSuccess = service.SendTweet(new SendTweetOptions { Status = textBox_info.Text });
-                SyncInvoke(() =>
-                    toolStripStatusLabel_status.Text = isSuccess != null ? "Success!" : "Failed to post the tweet");
+                var status = service.SendTweet(new SendTweetOptions { Status = TweetText.Text });
+                SyncInvoke(() => StatusLabel.Text = status != null ? "Tweet succeeded" : "Failed to tweet");
+                TweetStatusChanged(status);
             }
             catch (Exception ex)
             {
-                SyncInvoke(() =>
-                    toolStripStatusLabel_status.Text = ex.Message);
+                SyncInvoke(() => StatusLabel.Text = ex.Message);
             }
         }
 
+        private void TweetStatusChanged(TwitterStatus status)
+        {
+            if (!Settings.Default.IsBalloon) return;
+
+            if (status != null)
+            {
+                ShowBalloonTip(ToolTipIcon.Info, "Tweet succeeded", this.TweetText.Text);
+            }
+            else
+            {
+                ShowBalloonTip(ToolTipIcon.Error, "Faild to tweet", this.TweetText.Text);
+            }
+        }
 
         private async void button_post_Click(object sender, EventArgs e)
         {
@@ -103,31 +117,41 @@ namespace foobar4423
         private async void GetNowPlaying()
         {
             IMediaPlayer player = new NowPlayingLib.Foobar2000();
-            var p = player as INotifyPlayerStateChanged;
-            if (p != null)
-            {
-                p.CurrentMediaChanged += SetCurrentMedia;
-            }
             SetCurrentMedia(player, new CurrentMediaChangedEventArgs(await player.GetCurrentMedia()));            
         }
 
         private void SetCurrentMedia(object sender, CurrentMediaChangedEventArgs e)
         {
+            if (player.PlayerState != PlayerState.Playing)
+            {
+                SyncInvoke(() =>
+                {
+                    TweetText.Text = "";
+                    StatusLabel.Text = "foobar2000 is not playing";
+                });
+                return;
+            }
+
             try {
                 // なうぷれ取得
                 string text = NowPlayingParser.Parse(Settings.Default.NowPlayingFormat, e.CurrentMedia);
                 SyncInvoke(() =>
                 {
-                    textBox_info.Text = text;
-                    toolStripStatusLabel_status.Text = "Success!";
+                    TweetText.Text = text;
+                    StatusLabel.Text = "NowPlaying succeeded";
                 });
+
+                if (checkBox_autoPost.Checked)
+                {
+                    PostNowPlaying();
+                }
             }
-            catch (ArgumentException)
+            catch (Exception)
             {
                 SyncInvoke(() =>
                 {
-                    textBox_info.Text = "";
-                    toolStripStatusLabel_status.Text = "Faild to generate NowPlaying";
+                    TweetText.Text = "";
+                    StatusLabel.Text = "Faild to generate NowPlaying";
                 });
             }
         }
@@ -135,7 +159,16 @@ namespace foobar4423
         private async void button_getNowPlaying_Click(object sender, EventArgs e)
         {
             button_getNowPlaying.Enabled = false;
-            await Task.Run(() => GetNowPlaying());
+
+            if (Process.GetProcessesByName("foobar2000").Length != 0)
+            {
+                await Task.Run(() => GetNowPlaying());
+            }
+            else
+            {
+                StatusLabel.Text = "Faild to detect foobar2000";
+            }
+            
             button_getNowPlaying.Enabled = true;
         }
 
@@ -144,8 +177,8 @@ namespace foobar4423
 
         private void textBox_info_TextChanged(object sender, EventArgs e)
         {
-            int length = textBox_info.Text.Length;
-            toolStripStatusLabel_count.Text = length.ToString().PadLeft(3);
+            int length = TweetText.Text.Length;
+            CountLabel.Text = length.ToString().PadLeft(3);
 
             this.button_post.Enabled = length > 0;            
         }
@@ -175,7 +208,7 @@ namespace foobar4423
             if (this.WindowState == FormWindowState.Minimized)
             {
                 this.Visible = false;
-                notifyIcon1.Visible = true;
+                NotifyIcon.Visible = true;
             }
         }
 
@@ -184,28 +217,13 @@ namespace foobar4423
         {
             Display();
         }
-       
-        private void toolStripStatusLabel_status_TextChanged(object sender, EventArgs e)
-        {
-            if (!Settings.Default.IsBalloon) return;
 
-            switch (toolStripStatusLabel_status.Text)
-            {
-                case "Success!":
-                    ShowBalloonTip(ToolTipIcon.Info, "Post NowPlaying!", this.textBox_info.Text);
-                    break;
-                case "Failed to post the tweet":
-                    ShowBalloonTip(ToolTipIcon.Error, "Faild to post the tweet", this.textBox_info.Text);
-                    break;
-            }
-        }
-       
         private void ShowBalloonTip(ToolTipIcon icon, string title, string text, int time = 1000)
         {
-            this.notifyIcon1.BalloonTipIcon = icon;
-            this.notifyIcon1.BalloonTipTitle = title;
-            this.notifyIcon1.BalloonTipText = text;
-            this.notifyIcon1.ShowBalloonTip(time);
+            this.NotifyIcon.BalloonTipIcon = icon;
+            this.NotifyIcon.BalloonTipTitle = title;
+            this.NotifyIcon.BalloonTipText = text;
+            this.NotifyIcon.ShowBalloonTip(time);
         }
         
         /// <summary>
@@ -218,7 +236,7 @@ namespace foobar4423
             {
                 this.WindowState = FormWindowState.Normal;
             }
-            this.notifyIcon1.Visible = false;
+            this.NotifyIcon.Visible = false;
             this.Activate();
         }
         

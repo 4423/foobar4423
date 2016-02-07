@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace foobar4423
 {
-    public static class Utility
+    public static class StringExtension
     {
         /// <summary>
         /// 連続する半角空白文字を一つの空白文字に集約します。
