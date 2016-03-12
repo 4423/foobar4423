@@ -29,7 +29,11 @@ namespace foobar4423
         {
             InitializeComponent();
 
-            Application.ApplicationExit += (_, __) => this.NotifyIcon.Dispose();
+            Application.ApplicationExit += (_, __) =>
+            {
+                this.NotifyIcon.Dispose();
+                this.player.Dispose();
+            };
 
             try {
                 service = new TwitterService(Resources.CK, Resources.CS);
