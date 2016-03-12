@@ -59,6 +59,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\TweetSharp-Unofficial.2.3.1.2\lib\4.0\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NowPlayingLib">
+      <HintPath>..\..\..\..\..\Downloads\foobar4423-master\foobar4423-master\foobar4423\NowPlayingLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -147,12 +150,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Downloads\NowPlayingLib-master\NowPlayingLib-master\NowPlayingLib\NowPlayingLib.csproj">
-      <Project>{63929626-8fa7-472d-88e0-b19b246cd519}</Project>
-      <Name>NowPlayingLib</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
