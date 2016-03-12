@@ -75,7 +75,7 @@
             this.button_post.Name = "button_post";
             this.button_post.Size = new System.Drawing.Size(125, 34);
             this.button_post.TabIndex = 1;
-            this.button_post.Text = "Post";
+            this.button_post.Text = "Tweet";
             this.button_post.UseVisualStyleBackColor = true;
             this.button_post.Click += new System.EventHandler(this.button_post_Click);
             // 
@@ -110,8 +110,8 @@
             // ToolStripMenuItem_OAuth
             // 
             this.ToolStripMenuItem_OAuth.Name = "ToolStripMenuItem_OAuth";
-            this.ToolStripMenuItem_OAuth.Size = new System.Drawing.Size(173, 30);
-            this.ToolStripMenuItem_OAuth.Text = "OAuth(&O)";
+            this.ToolStripMenuItem_OAuth.Size = new System.Drawing.Size(234, 30);
+            this.ToolStripMenuItem_OAuth.Text = "Authentication(&A)";
             this.ToolStripMenuItem_OAuth.Click += new System.EventHandler(this.ToolStripMenuItem_OAuth_Click);
             // 
             // toolStripSeparator1
