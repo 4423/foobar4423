@@ -70,7 +70,7 @@
             // button_post
             // 
             this.button_post.Enabled = false;
-            this.button_post.Location = new System.Drawing.Point(582, 162);
+            this.button_post.Location = new System.Drawing.Point(579, 162);
             this.button_post.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.button_post.Name = "button_post";
             this.button_post.Size = new System.Drawing.Size(125, 34);
@@ -110,31 +110,31 @@
             // ToolStripMenuItem_OAuth
             // 
             this.ToolStripMenuItem_OAuth.Name = "ToolStripMenuItem_OAuth";
-            this.ToolStripMenuItem_OAuth.Size = new System.Drawing.Size(211, 30);
+            this.ToolStripMenuItem_OAuth.Size = new System.Drawing.Size(173, 30);
             this.ToolStripMenuItem_OAuth.Text = "OAuth(&O)";
             this.ToolStripMenuItem_OAuth.Click += new System.EventHandler(this.ToolStripMenuItem_OAuth_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(208, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(170, 6);
             // 
             // toolStripMenuItem_Config
             // 
             this.toolStripMenuItem_Config.Name = "toolStripMenuItem_Config";
-            this.toolStripMenuItem_Config.Size = new System.Drawing.Size(211, 30);
+            this.toolStripMenuItem_Config.Size = new System.Drawing.Size(173, 30);
             this.toolStripMenuItem_Config.Text = "Config(&C)";
             this.toolStripMenuItem_Config.Click += new System.EventHandler(this.toolStripMenuItem_Config_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(208, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(170, 6);
             // 
             // ToolStripMenuItem_Exit
             // 
             this.ToolStripMenuItem_Exit.Name = "ToolStripMenuItem_Exit";
-            this.ToolStripMenuItem_Exit.Size = new System.Drawing.Size(211, 30);
+            this.ToolStripMenuItem_Exit.Size = new System.Drawing.Size(173, 30);
             this.ToolStripMenuItem_Exit.Text = "Exit(&E)";
             this.ToolStripMenuItem_Exit.Click += new System.EventHandler(this.ToolStripMenuItem_Exit_Click);
             // 
@@ -195,7 +195,7 @@
             // checkBox_autoPost
             // 
             this.checkBox_autoPost.AutoSize = true;
-            this.checkBox_autoPost.Location = new System.Drawing.Point(20, 168);
+            this.checkBox_autoPost.Location = new System.Drawing.Point(20, 169);
             this.checkBox_autoPost.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.checkBox_autoPost.Name = "checkBox_autoPost";
             this.checkBox_autoPost.Size = new System.Drawing.Size(103, 22);
@@ -206,7 +206,7 @@
             // 
             // button_getNowPlaying
             // 
-            this.button_getNowPlaying.Location = new System.Drawing.Point(408, 162);
+            this.button_getNowPlaying.Location = new System.Drawing.Point(406, 162);
             this.button_getNowPlaying.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.button_getNowPlaying.Name = "button_getNowPlaying";
             this.button_getNowPlaying.Size = new System.Drawing.Size(163, 34);
