@@ -120,8 +120,18 @@ namespace foobar4423
         /// </summary>
         private async void GetNowPlaying()
         {
-            IMediaPlayer player = new NowPlayingLib.Foobar2000();
-            SetCurrentMedia(player, new CurrentMediaChangedEventArgs(await player.GetCurrentMedia()));            
+            try
+            {
+                SetCurrentMedia(this.player, new CurrentMediaChangedEventArgs(await this.player.GetCurrentMedia()));
+            }
+            catch (Exception)
+            {
+                SyncInvoke(() =>
+                {
+                    TweetText.Text = "";
+                    StatusLabel.Text = "Faild to generate NowPlaying";
+                });
+            }
         }
 
         private void SetCurrentMedia(object sender, CurrentMediaChangedEventArgs e)
@@ -136,28 +146,18 @@ namespace foobar4423
                 return;
             }
 
-            try {
-                // なうぷれ取得
-                string text = NowPlayingParser.Parse(Settings.Default.NowPlayingFormat, e.CurrentMedia);
-                SyncInvoke(() =>
-                {
-                    TweetText.Text = text;
-                    StatusLabel.Text = "NowPlaying succeeded";
-                });
-
-                if (checkBox_autoPost.Checked)
-                {
-                    PostNowPlaying();
-                }
-            }
-            catch (Exception)
+            // なうぷれ取得
+            string text = NowPlayingParser.Parse(Settings.Default.NowPlayingFormat, e.CurrentMedia);
+            SyncInvoke(() =>
             {
-                SyncInvoke(() =>
-                {
-                    TweetText.Text = "";
-                    StatusLabel.Text = "Faild to generate NowPlaying";
-                });
-            }
+                TweetText.Text = text;
+                StatusLabel.Text = "NowPlaying succeeded";
+            });
+
+            if (checkBox_autoPost.Checked)
+            {
+                PostNowPlaying();
+            }            
         }
 
         private async void button_getNowPlaying_Click(object sender, EventArgs e)
@@ -201,6 +201,9 @@ namespace foobar4423
                 {
                     p.CurrentMediaChanged -= SetCurrentMedia;
                 }
+                // foobar2000から曲情報が取り出せないことがある(InvalidArgumentEx:無効なパス)
+                // CurrentMediaChangedはその例外時に発火しないため
+                // foobar4423側でハンドル出来ずAutoPost時に曲取得エラーをUIに反映することが出来ない
             }
         }
 

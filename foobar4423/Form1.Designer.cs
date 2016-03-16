@@ -59,23 +59,21 @@
             // 
             // TweetText
             // 
-            this.TweetText.Location = new System.Drawing.Point(20, 57);
-            this.TweetText.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.TweetText.Location = new System.Drawing.Point(12, 38);
             this.TweetText.Multiline = true;
             this.TweetText.Name = "TweetText";
-            this.TweetText.Size = new System.Drawing.Size(684, 94);
+            this.TweetText.Size = new System.Drawing.Size(412, 64);
             this.TweetText.TabIndex = 0;
             this.TweetText.TextChanged += new System.EventHandler(this.textBox_info_TextChanged);
             // 
             // button_post
             // 
             this.button_post.Enabled = false;
-            this.button_post.Location = new System.Drawing.Point(579, 162);
-            this.button_post.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.button_post.Location = new System.Drawing.Point(347, 108);
             this.button_post.Name = "button_post";
-            this.button_post.Size = new System.Drawing.Size(125, 34);
+            this.button_post.Size = new System.Drawing.Size(75, 23);
             this.button_post.TabIndex = 1;
-            this.button_post.Text = "Tweet";
+            this.button_post.Text = "Post";
             this.button_post.UseVisualStyleBackColor = true;
             this.button_post.Click += new System.EventHandler(this.button_post_Click);
             // 
@@ -89,9 +87,8 @@
             this.ScreenNameLabel});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 3, 0, 3);
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip1.Size = new System.Drawing.Size(727, 35);
+            this.menuStrip1.Size = new System.Drawing.Size(436, 26);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -104,37 +101,37 @@
             this.toolStripSeparator2,
             this.ToolStripMenuItem_Exit});
             this.sDKじゃあのToolStripMenuItem.Name = "sDKじゃあのToolStripMenuItem";
-            this.sDKじゃあのToolStripMenuItem.Size = new System.Drawing.Size(69, 29);
+            this.sDKじゃあのToolStripMenuItem.Size = new System.Drawing.Size(57, 22);
             this.sDKじゃあのToolStripMenuItem.Text = "File(&F)";
             // 
             // ToolStripMenuItem_OAuth
             // 
             this.ToolStripMenuItem_OAuth.Name = "ToolStripMenuItem_OAuth";
-            this.ToolStripMenuItem_OAuth.Size = new System.Drawing.Size(234, 30);
+            this.ToolStripMenuItem_OAuth.Size = new System.Drawing.Size(178, 22);
             this.ToolStripMenuItem_OAuth.Text = "Authentication(&A)";
             this.ToolStripMenuItem_OAuth.Click += new System.EventHandler(this.ToolStripMenuItem_OAuth_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(170, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(175, 6);
             // 
             // toolStripMenuItem_Config
             // 
             this.toolStripMenuItem_Config.Name = "toolStripMenuItem_Config";
-            this.toolStripMenuItem_Config.Size = new System.Drawing.Size(173, 30);
+            this.toolStripMenuItem_Config.Size = new System.Drawing.Size(178, 22);
             this.toolStripMenuItem_Config.Text = "Config(&C)";
             this.toolStripMenuItem_Config.Click += new System.EventHandler(this.toolStripMenuItem_Config_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(170, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(175, 6);
             // 
             // ToolStripMenuItem_Exit
             // 
             this.ToolStripMenuItem_Exit.Name = "ToolStripMenuItem_Exit";
-            this.ToolStripMenuItem_Exit.Size = new System.Drawing.Size(173, 30);
+            this.ToolStripMenuItem_Exit.Size = new System.Drawing.Size(178, 22);
             this.ToolStripMenuItem_Exit.Text = "Exit(&E)";
             this.ToolStripMenuItem_Exit.Click += new System.EventHandler(this.ToolStripMenuItem_Exit_Click);
             // 
@@ -146,7 +143,7 @@
             this.ScreenNameLabel.Margin = new System.Windows.Forms.Padding(1, 0, 13, 0);
             this.ScreenNameLabel.Name = "ScreenNameLabel";
             this.ScreenNameLabel.ReadOnly = true;
-            this.ScreenNameLabel.Size = new System.Drawing.Size(417, 29);
+            this.ScreenNameLabel.Size = new System.Drawing.Size(250, 22);
             this.ScreenNameLabel.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // statusStrip1
@@ -157,10 +154,9 @@
             this.StatusLabel,
             this.toolStripStatusLabel2,
             this.CountLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 214);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 140);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 23, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(727, 30);
+            this.statusStrip1.Size = new System.Drawing.Size(436, 23);
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
@@ -168,13 +164,13 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(65, 25);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(51, 18);
             this.toolStripStatusLabel1.Text = "Status:";
             // 
             // StatusLabel
             // 
             this.StatusLabel.Name = "StatusLabel";
-            this.StatusLabel.Size = new System.Drawing.Size(541, 25);
+            this.StatusLabel.Size = new System.Drawing.Size(300, 18);
             this.StatusLabel.Spring = true;
             this.StatusLabel.Text = "　　　";
             this.StatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -182,23 +178,22 @@
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(64, 25);
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(47, 18);
             this.toolStripStatusLabel2.Text = "Count:";
             // 
             // CountLabel
             // 
             this.CountLabel.Name = "CountLabel";
-            this.CountLabel.Size = new System.Drawing.Size(32, 25);
+            this.CountLabel.Size = new System.Drawing.Size(23, 18);
             this.CountLabel.Text = "  0";
             this.CountLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // checkBox_autoPost
             // 
             this.checkBox_autoPost.AutoSize = true;
-            this.checkBox_autoPost.Location = new System.Drawing.Point(20, 169);
-            this.checkBox_autoPost.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.checkBox_autoPost.Location = new System.Drawing.Point(12, 113);
             this.checkBox_autoPost.Name = "checkBox_autoPost";
-            this.checkBox_autoPost.Size = new System.Drawing.Size(103, 22);
+            this.checkBox_autoPost.Size = new System.Drawing.Size(71, 16);
             this.checkBox_autoPost.TabIndex = 4;
             this.checkBox_autoPost.Text = "AutoPost";
             this.checkBox_autoPost.UseVisualStyleBackColor = true;
@@ -206,10 +201,9 @@
             // 
             // button_getNowPlaying
             // 
-            this.button_getNowPlaying.Location = new System.Drawing.Point(406, 162);
-            this.button_getNowPlaying.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.button_getNowPlaying.Location = new System.Drawing.Point(244, 108);
             this.button_getNowPlaying.Name = "button_getNowPlaying";
-            this.button_getNowPlaying.Size = new System.Drawing.Size(163, 34);
+            this.button_getNowPlaying.Size = new System.Drawing.Size(98, 23);
             this.button_getNowPlaying.TabIndex = 5;
             this.button_getNowPlaying.Text = "Get NowPlaying";
             this.button_getNowPlaying.UseVisualStyleBackColor = true;
@@ -233,34 +227,34 @@
             this.exitEToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.ShowImageMargin = false;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(214, 94);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(165, 70);
             // 
             // showSToolStripMenuItem
             // 
             this.showSToolStripMenuItem.Name = "showSToolStripMenuItem";
-            this.showSToolStripMenuItem.Size = new System.Drawing.Size(213, 30);
+            this.showSToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.showSToolStripMenuItem.Text = "Show(&S)";
             this.showSToolStripMenuItem.Click += new System.EventHandler(this.showSToolStripMenuItem_Click);
             // 
             // postNowPlayingPToolStripMenuItem
             // 
             this.postNowPlayingPToolStripMenuItem.Name = "postNowPlayingPToolStripMenuItem";
-            this.postNowPlayingPToolStripMenuItem.Size = new System.Drawing.Size(213, 30);
+            this.postNowPlayingPToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.postNowPlayingPToolStripMenuItem.Text = "Post NowPlaying(&P)";
             this.postNowPlayingPToolStripMenuItem.Click += new System.EventHandler(this.postNowPlayingPToolStripMenuItem_Click);
             // 
             // exitEToolStripMenuItem
             // 
             this.exitEToolStripMenuItem.Name = "exitEToolStripMenuItem";
-            this.exitEToolStripMenuItem.Size = new System.Drawing.Size(213, 30);
+            this.exitEToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.exitEToolStripMenuItem.Text = "Close(&C)";
             this.exitEToolStripMenuItem.Click += new System.EventHandler(this.exitEToolStripMenuItem_Click);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(727, 244);
+            this.ClientSize = new System.Drawing.Size(436, 163);
             this.Controls.Add(this.button_getNowPlaying);
             this.Controls.Add(this.checkBox_autoPost);
             this.Controls.Add(this.statusStrip1);
@@ -270,7 +264,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "foobar4423";
