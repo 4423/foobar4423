@@ -60,7 +60,7 @@
       <HintPath>..\packages\TweetSharp-Unofficial.2.3.1.2\lib\4.0\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NowPlayingLib">
-      <HintPath>..\..\..\..\..\Downloads\foobar4423-master\foobar4423-master\foobar4423\NowPlayingLib.dll</HintPath>
+      <HintPath>.\NowPlayingLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
