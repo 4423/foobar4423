@@ -29,144 +29,21 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Config));
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.button_filePath = new System.Windows.Forms.Button();
-            this.textBox_filePath = new System.Windows.Forms.TextBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.button_save = new System.Windows.Forms.Button();
+            this.button_cancel = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.checkBox_balloon = new System.Windows.Forms.CheckBox();
             this.button_reset = new System.Windows.Forms.Button();
             this.textBox_format = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.button_save = new System.Windows.Forms.Button();
-            this.button_cancel = new System.Windows.Forms.Button();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.button_filePath);
-            this.groupBox1.Controls.Add(this.textBox_filePath);
-            this.groupBox1.Location = new System.Drawing.Point(20, 18);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.groupBox1.Size = new System.Drawing.Size(485, 126);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "foobar2000";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 37);
-            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(177, 18);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "foobar2000.exe の場所";
-            // 
-            // button_filePath
-            // 
-            this.button_filePath.Location = new System.Drawing.Point(434, 55);
-            this.button_filePath.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.button_filePath.Name = "button_filePath";
-            this.button_filePath.Size = new System.Drawing.Size(38, 35);
-            this.button_filePath.TabIndex = 1;
-            this.button_filePath.Text = "...";
-            this.button_filePath.UseVisualStyleBackColor = true;
-            this.button_filePath.Click += new System.EventHandler(this.button_filePath_Click);
-            // 
-            // textBox_filePath
-            // 
-            this.textBox_filePath.Location = new System.Drawing.Point(13, 60);
-            this.textBox_filePath.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.textBox_filePath.Name = "textBox_filePath";
-            this.textBox_filePath.Size = new System.Drawing.Size(411, 25);
-            this.textBox_filePath.TabIndex = 0;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.checkBox_balloon);
-            this.groupBox2.Controls.Add(this.button_reset);
-            this.groupBox2.Controls.Add(this.textBox_format);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.linkLabel1);
-            this.groupBox2.Location = new System.Drawing.Point(20, 153);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.groupBox2.Size = new System.Drawing.Size(485, 189);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "foobar4423";
-            // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.linkLabel1.Location = new System.Drawing.Point(346, 32);
-            this.linkLabel1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(39, 18);
-            this.linkLabel1.TabIndex = 0;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "help";
-            this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
-            // 
-            // checkBox_balloon
-            // 
-            this.checkBox_balloon.AutoSize = true;
-            this.checkBox_balloon.Location = new System.Drawing.Point(13, 153);
-            this.checkBox_balloon.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.checkBox_balloon.Name = "checkBox_balloon";
-            this.checkBox_balloon.Size = new System.Drawing.Size(221, 22);
-            this.checkBox_balloon.TabIndex = 4;
-            this.checkBox_balloon.Text = "バルーン通知を有効にする";
-            this.checkBox_balloon.UseVisualStyleBackColor = true;
-            // 
-            // button_reset
-            // 
-            this.button_reset.Location = new System.Drawing.Point(405, 27);
-            this.button_reset.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.button_reset.Name = "button_reset";
-            this.button_reset.Size = new System.Drawing.Size(67, 29);
-            this.button_reset.TabIndex = 3;
-            this.button_reset.Text = "reset";
-            this.button_reset.UseVisualStyleBackColor = true;
-            this.button_reset.Click += new System.EventHandler(this.button_reset_Click);
-            // 
-            // textBox_format
-            // 
-            this.textBox_format.Location = new System.Drawing.Point(13, 63);
-            this.textBox_format.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.textBox_format.Multiline = true;
-            this.textBox_format.Name = "textBox_format";
-            this.textBox_format.Size = new System.Drawing.Size(459, 73);
-            this.textBox_format.TabIndex = 1;
-            this.textBox_format.Text = "$SONG$ - $ARTIST$ via $ALBUM$ - $ALBUM_ARTIST$ / $TRACK_NUMBER$ #nowplaying";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 32);
-            this.label2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(222, 18);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "NowPlayingの投稿フォーマット";
             // 
             // button_save
             // 
-            this.button_save.Location = new System.Drawing.Point(245, 358);
-            this.button_save.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.button_save.Location = new System.Drawing.Point(135, 140);
             this.button_save.Name = "button_save";
-            this.button_save.Size = new System.Drawing.Size(125, 35);
+            this.button_save.Size = new System.Drawing.Size(75, 23);
             this.button_save.TabIndex = 2;
             this.button_save.Text = "Save";
             this.button_save.UseVisualStyleBackColor = true;
@@ -174,10 +51,9 @@
             // 
             // button_cancel
             // 
-            this.button_cancel.Location = new System.Drawing.Point(380, 358);
-            this.button_cancel.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.button_cancel.Location = new System.Drawing.Point(216, 140);
             this.button_cancel.Name = "button_cancel";
-            this.button_cancel.Size = new System.Drawing.Size(125, 35);
+            this.button_cancel.Size = new System.Drawing.Size(75, 23);
             this.button_cancel.TabIndex = 3;
             this.button_cancel.Text = "Cancel";
             this.button_cancel.UseVisualStyleBackColor = true;
@@ -187,44 +63,87 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // checkBox_balloon
+            // 
+            this.checkBox_balloon.AutoSize = true;
+            this.checkBox_balloon.Location = new System.Drawing.Point(14, 112);
+            this.checkBox_balloon.Name = "checkBox_balloon";
+            this.checkBox_balloon.Size = new System.Drawing.Size(148, 16);
+            this.checkBox_balloon.TabIndex = 9;
+            this.checkBox_balloon.Text = "バルーン通知を有効にする";
+            this.checkBox_balloon.UseVisualStyleBackColor = true;
+            // 
+            // button_reset
+            // 
+            this.button_reset.Location = new System.Drawing.Point(251, 13);
+            this.button_reset.Name = "button_reset";
+            this.button_reset.Size = new System.Drawing.Size(40, 19);
+            this.button_reset.TabIndex = 8;
+            this.button_reset.Text = "reset";
+            this.button_reset.UseVisualStyleBackColor = true;
+            // 
+            // textBox_format
+            // 
+            this.textBox_format.Location = new System.Drawing.Point(14, 35);
+            this.textBox_format.Multiline = true;
+            this.textBox_format.Name = "textBox_format";
+            this.textBox_format.Size = new System.Drawing.Size(277, 60);
+            this.textBox_format.TabIndex = 7;
+            this.textBox_format.Text = "$SONG$ - $ARTIST$ via $ALBUM$ - $ALBUM_ARTIST$ / $TRACK_NUMBER$ #nowplaying";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(148, 12);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "NowPlayingの投稿フォーマット";
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.linkLabel1.Location = new System.Drawing.Point(216, 16);
+            this.linkLabel1.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(26, 12);
+            this.linkLabel1.TabIndex = 6;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "help";
+            this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Form_Config
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(525, 412);
+            this.ClientSize = new System.Drawing.Size(305, 177);
+            this.Controls.Add(this.checkBox_balloon);
+            this.Controls.Add(this.button_reset);
+            this.Controls.Add(this.textBox_format);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.button_cancel);
             this.Controls.Add(this.button_save);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.MaximizeBox = false;
             this.Name = "Form_Config";
             this.Text = "Config";
             this.Load += new System.EventHandler(this.Form_Config_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button_filePath;
-        private System.Windows.Forms.TextBox textBox_filePath;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button button_save;
         private System.Windows.Forms.Button button_cancel;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox_format;
-        private System.Windows.Forms.Button button_reset;
         private System.Windows.Forms.CheckBox checkBox_balloon;
+        private System.Windows.Forms.Button button_reset;
+        private System.Windows.Forms.TextBox textBox_format;
+        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }

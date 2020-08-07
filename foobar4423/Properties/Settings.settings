@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="foobar4423.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="FoobarFilePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Program Files (x86)\foobar2000\foobar2000.exe</Value>
-    </Setting>
     <Setting Name="AT" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
