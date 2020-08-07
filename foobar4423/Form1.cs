@@ -14,7 +14,7 @@ namespace foobar4423
     public partial class Form1 : Form
     {
         private Tokens tokens;
-        private IMediaPlayer player = new NowPlayingLib.Foobar2000();
+        private IMediaPlayer player;
 
         private string ScreenName
         {
@@ -31,6 +31,13 @@ namespace foobar4423
             InitializeComponent();
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
+            player = new NowPlayingLib.Foobar2000();
+            var p = player as INotifyPlayerStateChanged;
+            if (p != null)
+            {
+                p.CurrentMediaChanged += OnCurrentMediaChanged;
+            }
 
             Application.ApplicationExit += (_, __) =>
             {
@@ -173,30 +180,13 @@ namespace foobar4423
             this.button_post.Enabled = length > 0;            
         }
         
-        
-        private void checkBox_autoPost_CheckedChanged(object sender, EventArgs e)
-        {
-            var p = this.player as INotifyPlayerStateChanged;
-            if (p != null)
-            {
-                if (checkBox_autoPost.Checked)
-                {
-                    p.CurrentMediaChanged += OnCurrentMediaChanged;
-                }
-                else
-                {
-                    p.CurrentMediaChanged -= OnCurrentMediaChanged;
-                }
-                // foobar2000から曲情報が取り出せないことがある(InvalidArgumentEx:無効なパス)
-                // CurrentMediaChangedはその例外時に発火しないため
-                // foobar4423側でハンドル出来ずAutoPost時に曲取得エラーをUIに反映することが出来ない
-            }
-        }
-
         private async void OnCurrentMediaChanged(object sender, CurrentMediaChangedEventArgs e)
         {
-            SyncInvoke(() => SetCurrentMedia(e.CurrentMedia));
-            await PostNowPlaying();
+            if (checkBox_autoPost.Checked)
+            {
+                SyncInvoke(() => SetCurrentMedia(e.CurrentMedia));
+                await PostNowPlaying();
+            }
         }
 
         #region "  通知領域  "

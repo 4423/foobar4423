@@ -197,7 +197,6 @@
             this.checkBox_autoPost.TabIndex = 4;
             this.checkBox_autoPost.Text = "AutoPost";
             this.checkBox_autoPost.UseVisualStyleBackColor = true;
-            this.checkBox_autoPost.CheckedChanged += new System.EventHandler(this.checkBox_autoPost_CheckedChanged);
             // 
             // button_getNowPlaying
             // 
