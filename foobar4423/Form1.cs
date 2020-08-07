@@ -3,16 +3,17 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows;
-using TweetSharp;
+using CoreTweet;
 using foobar4423.Properties;
 using NowPlayingLib;
 using System.Diagnostics;
+using System.Net;
 
 namespace foobar4423
 {
     public partial class Form1 : Form
     {
-        private TwitterService service;
+        private Tokens tokens;
         private IMediaPlayer player = new NowPlayingLib.Foobar2000();
 
         private string ScreenName
@@ -29,6 +30,8 @@ namespace foobar4423
         {
             InitializeComponent();
 
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
             Application.ApplicationExit += (_, __) =>
             {
                 this.NotifyIcon.Dispose();
@@ -36,8 +39,7 @@ namespace foobar4423
             };
 
             try {
-                service = new TwitterService(Resources.CK, Resources.CS);
-                service.AuthenticateWith(Settings.Default.AT, Settings.Default.ATS);
+                tokens = Tokens.Create(Resources.CK, Resources.CS, Settings.Default.AT, Settings.Default.ATS);
             }
             catch (Exception) {
                 StatusLabel.Text = "Faild to recognize the token";
@@ -61,7 +63,7 @@ namespace foobar4423
             fo.ShowDialog();
 
             ScreenNameLabel.Text = ScreenName;
-            service.AuthenticateWith(Settings.Default.AT, Settings.Default.ATS);
+            tokens = Tokens.Create(Resources.CK, Resources.CS, Settings.Default.AT, Settings.Default.ATS);
         }
 
         private void ToolStripMenuItem_Exit_Click(object sender, EventArgs e)
@@ -78,9 +80,9 @@ namespace foobar4423
         {
             try
             {
-                var status = service.SendTweet(new SendTweetOptions { Status = TweetText.Text });
-                SyncInvoke(() => StatusLabel.Text = status != null ? "Tweet succeeded" : "Failed to tweet");
-                TweetStatusChanged(status);
+                var res = tokens.Statuses.Update(status => TweetText.Text);
+                SyncInvoke(() => StatusLabel.Text = res != null ? "Tweet succeeded" : "Failed to tweet");
+                TweetStatusChanged(res);
             }
             catch (Exception ex)
             {
@@ -88,11 +90,11 @@ namespace foobar4423
             }
         }
 
-        private void TweetStatusChanged(TwitterStatus status)
+        private void TweetStatusChanged(StatusResponse res)
         {
             if (!Settings.Default.IsBalloon) return;
 
-            if (status != null)
+            if (res != null)
             {
                 ShowBalloonTip(ToolTipIcon.Info, "Tweet succeeded", this.TweetText.Text);
             }

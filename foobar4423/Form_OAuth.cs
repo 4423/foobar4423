@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms;
-using TweetSharp;
+using CoreTweet;
 using System.Threading.Tasks;
 using foobar4423.Properties;
 
@@ -9,8 +9,7 @@ namespace foobar4423
 {
     public partial class Form_OAuth : Form
     {
-        private TwitterService service;
-        private OAuthRequestToken requestToken;
+        private OAuth.OAuthSession session;
                 
 
         public Form_OAuth()
@@ -23,26 +22,21 @@ namespace foobar4423
         {
             button_OAuth.Enabled = false;
 
-            await Task.Run(() =>
+            try
             {
-                service = new TwitterService(Resources.CK, Resources.CS);
-                try
-                {
-                    requestToken = service.GetRequestToken();
-                }
-                catch (ArgumentNullException)
-                {
-                    MessageBox.Show("リクエストトークンが生成できませんでした。\nネットワーク接続を確認して下さい。",
+                session = await OAuth.AuthorizeAsync(Resources.CK, Resources.CS);
+                Process.Start(session.AuthorizeUri.ToString());
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("リクエストトークンが生成できませんでした。\nネットワーク接続を確認して下さい。",
                         "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                Uri uri = service.GetAuthorizationUri(requestToken);
-                Process.Start(uri.ToString());
-            });
+            }
 
             button_OAuth.Enabled = true;
         }
 
-        private void button_token_Click(object sender, EventArgs e)
+        private async void button_token_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBox_pin.Text))
             {
@@ -51,20 +45,19 @@ namespace foobar4423
                 return;
             }
 
-            OAuthAccessToken access = service.GetAccessToken(requestToken, textBox_pin.Text);
-            service.AuthenticateWith(access.Token, access.TokenSecret);
-            SaveToken(access);
+            var token = await OAuth.GetTokensAsync(session, textBox_pin.Text);
+            SaveToken(token);
 
-            MessageBox.Show("Welcom @" + access.ScreenName, "Hello", 
+            MessageBox.Show("Welcom @" + token.ScreenName, "Hello", 
                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
             this.Close();
         }
 
-        private void SaveToken(OAuthAccessToken access)
+        private void SaveToken(Tokens token)
         {
-            Settings.Default.AT = access.Token;
-            Settings.Default.ATS = access.TokenSecret;
-            Settings.Default.ScreenName = access.ScreenName;
+            Settings.Default.AT = token.AccessToken;
+            Settings.Default.ATS = token.AccessTokenSecret;
+            Settings.Default.ScreenName = token.ScreenName;
 
             Settings.Default.Save();
         }
