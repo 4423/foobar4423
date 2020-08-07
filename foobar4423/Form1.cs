@@ -81,26 +81,23 @@ namespace foobar4423
             try
             {
                 var res = tokens.Statuses.Update(status => TweetText.Text);
-                SyncInvoke(() => StatusLabel.Text = res != null ? "Tweet succeeded" : "Failed to tweet");
-                TweetStatusChanged(res);
+                NotifyTweetResult(isSucceeded: true);
             }
-            catch (Exception ex)
+            catch (TwitterException)
             {
-                SyncInvoke(() => StatusLabel.Text = ex.Message);
+                NotifyTweetResult(isSucceeded: false);
             }
         }
 
-        private void TweetStatusChanged(StatusResponse res)
+        private void NotifyTweetResult(bool isSucceeded)
         {
-            if (!Settings.Default.IsBalloon) return;
+            var message = isSucceeded ? "Tweet succeeded" : "Failed to tweet";
+            var icon = isSucceeded ? ToolTipIcon.Info : ToolTipIcon.Error;
 
-            if (res != null)
+            SyncInvoke(() => StatusLabel.Text = message);
+            if (Settings.Default.IsBalloon)
             {
-                ShowBalloonTip(ToolTipIcon.Info, "Tweet succeeded", this.TweetText.Text);
-            }
-            else
-            {
-                ShowBalloonTip(ToolTipIcon.Error, "Faild to tweet", this.TweetText.Text);
+                ShowBalloonTip(icon, message, this.TweetText.Text);
             }
         }
 
