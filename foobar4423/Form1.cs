@@ -15,16 +15,7 @@ namespace foobar4423
     {
         private Tokens tokens;
         private IMediaPlayer player;
-
-        private string ScreenName
-        {
-            get
-            {
-                string screenName = Settings.Default.ScreenName;
-                return (screenName == string.Empty) ? screenName : "@" + screenName;
-            }
-        }
-
+        
 
         public Form1()
         {
@@ -52,7 +43,7 @@ namespace foobar4423
                 StatusLabel.Text = "Faild to recognize the token";
             }
 
-            ScreenNameLabel.Text = ScreenName;
+            UpdateScreenNameLabel(Settings.Default.ScreenName);
         }
 
 
@@ -69,7 +60,7 @@ namespace foobar4423
             Form_OAuth fo = new Form_OAuth();
             fo.ShowDialog();
 
-            ScreenNameLabel.Text = ScreenName;
+            UpdateScreenNameLabel(Settings.Default.ScreenName);
             tokens = Tokens.Create(SecretResources.CK, SecretResources.CS, Settings.Default.AT, Settings.Default.ATS);
         }
 
@@ -78,8 +69,19 @@ namespace foobar4423
             Application.Exit();
         }
 
-       
-/*******ツイート*******/
+        private void UpdateScreenNameLabel(string screenName)
+        {
+            if (String.IsNullOrEmpty(screenName))
+            {
+                ScreenNameLabel.Text = "";
+            }
+            else
+            {
+                ScreenNameLabel.Text = "@" + screenName;
+            }
+        }
+
+        /*******ツイート*******/
         /// <summary>
         /// textBoxのなうぷれをツイート
         /// </summary>
