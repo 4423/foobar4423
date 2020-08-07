@@ -92,6 +92,11 @@
       <DependentUpon>Form_OAuth.cs</DependentUpon>
     </Compile>
     <Compile Include="NowPlayingParser.cs" />
+    <Compile Include="Properties\SecretResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SecretResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="StringExtension.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -114,6 +119,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Properties\SecretResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SecretResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

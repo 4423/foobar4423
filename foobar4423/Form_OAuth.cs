@@ -24,7 +24,7 @@ namespace foobar4423
 
             try
             {
-                session = await OAuth.AuthorizeAsync(Resources.CK, Resources.CS);
+                session = await OAuth.AuthorizeAsync(SecretResources.CK, SecretResources.CS);
                 Process.Start(session.AuthorizeUri.ToString());
             }
             catch (Exception)

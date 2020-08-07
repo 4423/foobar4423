@@ -22,14 +22,14 @@ namespace foobar4423.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    internal class SecretResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal SecretResources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace foobar4423.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("foobar4423.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("foobar4423.Properties.SecretResources", typeof(SecretResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,74 +61,20 @@ namespace foobar4423.Properties {
         }
         
         /// <summary>
-        ///   $ALBUM$ に類似しているローカライズされた文字列を検索します。
+        ///   7ssbEk8h7MI8MpPR6AuQLhgD1 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Album {
+        internal static string CK {
             get {
-                return ResourceManager.GetString("Album", resourceCulture);
+                return ResourceManager.GetString("CK", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   $ALBUM_ARTIST$ に類似しているローカライズされた文字列を検索します。
+        ///   gdLrZyis2XM0x6p2mOlLL6v9rYx6TYGc0FxH0Eg1PCvemF8usn に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string AlbumArtist {
+        internal static string CS {
             get {
-                return ResourceManager.GetString("AlbumArtist", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   $ARTIST$ に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string Artist {
-            get {
-                return ResourceManager.GetString("Artist", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   $SONG$&lt; - $ARTIST$&gt;&lt; via $ALBUM$&gt;&lt; - $ALBUM_ARTIST$&gt;&lt; / Track.$TRACK_NUMBER$&gt; #nowplaying に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string DefaultFormat {
-            get {
-                return ResourceManager.GetString("DefaultFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   $DISC_NUMBER$ に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string DiscNum {
-            get {
-                return ResourceManager.GetString("DiscNum", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   http://4423lab.webcrow.jp/app/nowplaying/index.html#format に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string HelpUrl {
-            get {
-                return ResourceManager.GetString("HelpUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   $SONG$ に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string Title {
-            get {
-                return ResourceManager.GetString("Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   $TRACK_NUMBER$ に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string TrackNum {
-            get {
-                return ResourceManager.GetString("TrackNum", resourceCulture);
+                return ResourceManager.GetString("CS", resourceCulture);
             }
         }
     }

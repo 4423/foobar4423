@@ -39,7 +39,7 @@ namespace foobar4423
             };
 
             try {
-                tokens = Tokens.Create(Resources.CK, Resources.CS, Settings.Default.AT, Settings.Default.ATS);
+                tokens = Tokens.Create(SecretResources.CK, SecretResources.CS, Settings.Default.AT, Settings.Default.ATS);
             }
             catch (Exception) {
                 StatusLabel.Text = "Faild to recognize the token";
@@ -63,7 +63,7 @@ namespace foobar4423
             fo.ShowDialog();
 
             ScreenNameLabel.Text = ScreenName;
-            tokens = Tokens.Create(Resources.CK, Resources.CS, Settings.Default.AT, Settings.Default.ATS);
+            tokens = Tokens.Create(SecretResources.CK, SecretResources.CS, Settings.Default.AT, Settings.Default.ATS);
         }
 
         private void ToolStripMenuItem_Exit_Click(object sender, EventArgs e)
