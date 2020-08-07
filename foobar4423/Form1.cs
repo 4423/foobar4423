@@ -137,47 +137,56 @@ namespace foobar4423
         /// <summary>
         /// なうぷれを取得
         /// </summary>
-        private async Task GetNowPlaying()
+        private async Task GenerateNowPlaying()
         {
+            if (Process.GetProcessesByName("foobar2000").Length == 0)
+            {
+                TweetText.Text = "";
+                StatusLabel.Text = "Failed to detect foobar2000";
+                return;
+            }
+
+            if (player.PlayerState != PlayerState.Playing)
+            {
+                TweetText.Text = "";
+                StatusLabel.Text = "foobar2000 is not playing song";
+                return;
+            }
+
+            MediaItem media;
             try
             {
-                var media = await this.player.GetCurrentMedia();
-                SetCurrentMedia(media);
+                media = await player.GetCurrentMedia();
             }
             catch (Exception)
             {
                 TweetText.Text = "";
-                StatusLabel.Text = "Faild to generate NowPlaying";
-            }
-        }
-
-        private void SetCurrentMedia(MediaItem media)
-        {
-            if (player.PlayerState != PlayerState.Playing)
-            {
-                TweetText.Text = "";
-                StatusLabel.Text = "foobar2000 is not playing";
+                StatusLabel.Text = "Failed to get information from foobar2000";
                 return;
             }
 
-            // なうぷれ取得
-            string text = NowPlayingParser.Parse(Settings.Default.NowPlayingFormat, media);
-            TweetText.Text = text;
-            StatusLabel.Text = "NowPlaying succeeded";
+            GenerateNowPlayingCore(media);
+        }
+
+        private void GenerateNowPlayingCore(MediaItem media)
+        {
+            try
+            {
+                TweetText.Text = NowPlayingParser.Parse(Settings.Default.NowPlayingFormat, media);
+                StatusLabel.Text = "Generated nowplaying";
+            }
+            catch (Exception)
+            {
+                TweetText.Text = "";
+                StatusLabel.Text = "Failed to generate nowplaying";
+            }
         }
 
         private async void button_getNowPlaying_Click(object sender, EventArgs e)
         {
             button_getNowPlaying.Enabled = false;
 
-            if (Process.GetProcessesByName("foobar2000").Length != 0)
-            {
-                await GetNowPlaying();
-            }
-            else
-            {
-                StatusLabel.Text = "Faild to detect foobar2000";
-            }
+            await GenerateNowPlaying();
             
             button_getNowPlaying.Enabled = true;
         }
@@ -197,7 +206,7 @@ namespace foobar4423
         {
             if (checkBox_autoPost.Checked)
             {
-                SyncInvoke(() => SetCurrentMedia(e.CurrentMedia));
+                SyncInvoke(() => GenerateNowPlayingCore(e.CurrentMedia));
                 await PostNowPlaying();
             }
         }
@@ -252,7 +261,7 @@ namespace foobar4423
 
         private async void postNowPlayingPToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            await GetNowPlaying();
+            await GenerateNowPlaying();
             await PostNowPlaying();
         }
 
