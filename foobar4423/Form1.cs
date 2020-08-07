@@ -76,11 +76,11 @@ namespace foobar4423
         /// <summary>
         /// textBoxのなうぷれをツイート
         /// </summary>
-        private void PostNowPlaying()
+        private async Task PostNowPlaying()
         {
             try
             {
-                var res = tokens.Statuses.Update(status => TweetText.Text);
+                await tokens.Statuses.UpdateAsync(status => TweetText.Text);
                 NotifyTweetResult(isSucceeded: true);
             }
             catch (TwitterException)
@@ -94,7 +94,7 @@ namespace foobar4423
             var message = isSucceeded ? "Tweet succeeded" : "Failed to tweet";
             var icon = isSucceeded ? ToolTipIcon.Info : ToolTipIcon.Error;
 
-            SyncInvoke(() => StatusLabel.Text = message);
+            StatusLabel.Text = message;
             if (Settings.Default.IsBalloon)
             {
                 ShowBalloonTip(icon, message, this.TweetText.Text);
@@ -106,7 +106,7 @@ namespace foobar4423
             button_post.Enabled = false;
             button_post.Text = "Posting";
 
-            await Task.Run(() => PostNowPlaying());
+            await PostNowPlaying();
 
             button_post.Enabled = true;
             button_post.Text = "Post";
@@ -117,46 +117,33 @@ namespace foobar4423
         /// <summary>
         /// なうぷれを取得
         /// </summary>
-        private async void GetNowPlaying()
+        private async Task GetNowPlaying()
         {
             try
             {
-                SetCurrentMedia(this.player, new CurrentMediaChangedEventArgs(await this.player.GetCurrentMedia()));
+                var media = await this.player.GetCurrentMedia();
+                SetCurrentMedia(media);
             }
             catch (Exception)
             {
-                SyncInvoke(() =>
-                {
-                    TweetText.Text = "";
-                    StatusLabel.Text = "Faild to generate NowPlaying";
-                });
+                TweetText.Text = "";
+                StatusLabel.Text = "Faild to generate NowPlaying";
             }
         }
 
-        private void SetCurrentMedia(object sender, CurrentMediaChangedEventArgs e)
+        private void SetCurrentMedia(MediaItem media)
         {
             if (player.PlayerState != PlayerState.Playing)
             {
-                SyncInvoke(() =>
-                {
-                    TweetText.Text = "";
-                    StatusLabel.Text = "foobar2000 is not playing";
-                });
+                TweetText.Text = "";
+                StatusLabel.Text = "foobar2000 is not playing";
                 return;
             }
 
             // なうぷれ取得
-            string text = NowPlayingParser.Parse(Settings.Default.NowPlayingFormat, e.CurrentMedia);
-            SyncInvoke(() =>
-            {
-                TweetText.Text = text;
-                StatusLabel.Text = "NowPlaying succeeded";
-            });
-
-            if (checkBox_autoPost.Checked)
-            {
-                PostNowPlaying();
-            }            
+            string text = NowPlayingParser.Parse(Settings.Default.NowPlayingFormat, media);
+            TweetText.Text = text;
+            StatusLabel.Text = "NowPlaying succeeded";
         }
 
         private async void button_getNowPlaying_Click(object sender, EventArgs e)
@@ -165,7 +152,7 @@ namespace foobar4423
 
             if (Process.GetProcessesByName("foobar2000").Length != 0)
             {
-                await Task.Run(() => GetNowPlaying());
+                await GetNowPlaying();
             }
             else
             {
@@ -194,11 +181,11 @@ namespace foobar4423
             {
                 if (checkBox_autoPost.Checked)
                 {
-                    p.CurrentMediaChanged += SetCurrentMedia;
+                    p.CurrentMediaChanged += OnCurrentMediaChanged;
                 }
                 else
                 {
-                    p.CurrentMediaChanged -= SetCurrentMedia;
+                    p.CurrentMediaChanged -= OnCurrentMediaChanged;
                 }
                 // foobar2000から曲情報が取り出せないことがある(InvalidArgumentEx:無効なパス)
                 // CurrentMediaChangedはその例外時に発火しないため
@@ -206,9 +193,15 @@ namespace foobar4423
             }
         }
 
+        private async void OnCurrentMediaChanged(object sender, CurrentMediaChangedEventArgs e)
+        {
+            SyncInvoke(() => SetCurrentMedia(e.CurrentMedia));
+            await PostNowPlaying();
+        }
+
         #region "  通知領域  "
 
-            //最小化時
+        //最小化時
         private void Form1_Resize(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized)
@@ -254,10 +247,10 @@ namespace foobar4423
             Display();
         }
 
-        private void postNowPlayingPToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void postNowPlayingPToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            GetNowPlaying();
-            PostNowPlaying();
+            await GetNowPlaying();
+            await PostNowPlaying();
         }
 
         private void exitEToolStripMenuItem_Click(object sender, EventArgs e)
