@@ -98,6 +98,11 @@ namespace foobar4423
         /// </summary>
         private async Task PostNowPlaying()
         {
+            if (String.IsNullOrEmpty(TweetText.Text))
+            {
+                return;
+            }
+
             try
             {
                 await tokens.Statuses.UpdateAsync(status => TweetText.Text);
@@ -117,7 +122,7 @@ namespace foobar4423
             StatusLabel.Text = message;
             if (Settings.Default.IsBalloon)
             {
-                ShowBalloonTip(icon, message, this.TweetText.Text);
+                ShowBalloonTip(icon, message, TweetText.Text);
             }
         }
 
