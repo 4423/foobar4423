@@ -14,7 +14,7 @@
     <Setting Name="NowPlayingFormat" Type="System.String" Scope="User">
       <Value Profile="(Default)">$SONG$&lt; - $ARTIST$&gt;&lt; via $ALBUM$&gt;&lt; - $ALBUM_ARTIST$&gt;&lt; / Track.$TRACK_NUMBER$&gt; #nowplaying</Value>
     </Setting>
-    <Setting Name="IsBalloon" Type="System.Boolean" Scope="User">
+    <Setting Name="ShowBalloon" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>

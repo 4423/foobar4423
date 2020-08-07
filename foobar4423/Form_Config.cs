@@ -35,7 +35,7 @@ namespace foobar4423
         internal void SaveConfig()
         {
             Settings.Default.NowPlayingFormat = textBox_format.Text;
-            Settings.Default.IsBalloon = checkBox_balloon.Checked;
+            Settings.Default.ShowBalloon = checkBox_balloon.Checked;
 
             Settings.Default.Save();
         }
@@ -46,7 +46,7 @@ namespace foobar4423
         private void LoadConfig()
         {
             textBox_format.Text = Settings.Default.NowPlayingFormat;
-            checkBox_balloon.Checked = Settings.Default.IsBalloon;
+            checkBox_balloon.Checked = Settings.Default.ShowBalloon;
         }
 
         private void OnResetButtonClicked(object sender, EventArgs e)

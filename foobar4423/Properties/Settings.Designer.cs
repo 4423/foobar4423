@@ -75,12 +75,12 @@ namespace foobar4423.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool IsBalloon {
+        public bool ShowBalloon {
             get {
-                return ((bool)(this["IsBalloon"]));
+                return ((bool)(this["ShowBalloon"]));
             }
             set {
-                this["IsBalloon"] = value;
+                this["ShowBalloon"] = value;
             }
         }
     }

@@ -120,7 +120,7 @@ namespace foobar4423
             var icon = isSucceeded ? ToolTipIcon.Info : ToolTipIcon.Error;
 
             StatusLabel.Text = message;
-            if (Settings.Default.IsBalloon)
+            if (Settings.Default.ShowBalloon)
             {
                 ShowBalloonTip(icon, message, TweetText.Text);
             }
