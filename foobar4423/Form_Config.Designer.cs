@@ -36,7 +36,7 @@
             this.button_reset = new System.Windows.Forms.Button();
             this.textBox_format = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.helpLinkLabel = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // button_save
@@ -100,18 +100,19 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "NowPlayingの投稿フォーマット";
             // 
-            // linkLabel1
+            // helpLinkLabel
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.linkLabel1.Location = new System.Drawing.Point(216, 16);
-            this.linkLabel1.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(26, 12);
-            this.linkLabel1.TabIndex = 6;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "help";
-            this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.helpLinkLabel.AutoSize = true;
+            this.helpLinkLabel.BackColor = System.Drawing.Color.Transparent;
+            this.helpLinkLabel.Location = new System.Drawing.Point(216, 16);
+            this.helpLinkLabel.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.helpLinkLabel.Name = "helpLinkLabel";
+            this.helpLinkLabel.Size = new System.Drawing.Size(26, 12);
+            this.helpLinkLabel.TabIndex = 6;
+            this.helpLinkLabel.TabStop = true;
+            this.helpLinkLabel.Text = "help";
+            this.helpLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.helpLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnHelpLinkClicked);
             // 
             // Form_Config
             // 
@@ -122,7 +123,7 @@
             this.Controls.Add(this.button_reset);
             this.Controls.Add(this.textBox_format);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.linkLabel1);
+            this.Controls.Add(this.helpLinkLabel);
             this.Controls.Add(this.button_cancel);
             this.Controls.Add(this.button_save);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -144,6 +145,6 @@
         private System.Windows.Forms.Button button_reset;
         private System.Windows.Forms.TextBox textBox_format;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel helpLinkLabel;
     }
 }

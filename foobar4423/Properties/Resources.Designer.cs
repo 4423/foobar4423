@@ -106,7 +106,7 @@ namespace foobar4423.Properties {
         }
         
         /// <summary>
-        ///   http://4423lab.webcrow.jp/app/nowplaying/index.html#format に類似しているローカライズされた文字列を検索します。
+        ///   https://4423.ch/apps/foobar4423/#format に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string HelpUrl {
             get {

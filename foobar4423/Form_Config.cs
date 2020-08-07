@@ -59,7 +59,7 @@ namespace foobar4423
             }
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void OnHelpLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             var result = MessageBox.Show("Webページを表示します。", "確認",
                 MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
