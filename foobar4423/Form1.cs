@@ -35,19 +35,9 @@ namespace foobar4423
                 this.NotifyIcon.Dispose();
                 this.player.Dispose();
             };
-
-            try {
-                tokens = Tokens.Create(SecretResources.CK, SecretResources.CS, Settings.Default.AT, Settings.Default.ATS);
-            }
-            catch (Exception) {
-                StatusLabel.Text = "Faild to recognize the token";
-            }
-
-            UpdateScreenNameLabel(Settings.Default.ScreenName);
         }
 
 
-       
 /*******メニュー画面*******/
         private void toolStripMenuItem_Config_Click(object sender, EventArgs e)
         {
@@ -55,18 +45,39 @@ namespace foobar4423
             fc.ShowDialog();
         }
 
-        private void ToolStripMenuItem_OAuth_Click(object sender, EventArgs e)
+        private async void ToolStripMenuItem_OAuth_Click(object sender, EventArgs e)
         {
             Form_OAuth fo = new Form_OAuth();
             fo.ShowDialog();
 
+            await VerifyTwitterAccount();
             UpdateScreenNameLabel(Settings.Default.ScreenName);
-            tokens = Tokens.Create(SecretResources.CK, SecretResources.CS, Settings.Default.AT, Settings.Default.ATS);
         }
 
         private void ToolStripMenuItem_Exit_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private async void OnFormShown(object sender, EventArgs e)
+        {
+            await Task.Delay(200);
+            await VerifyTwitterAccount();
+            UpdateScreenNameLabel(Settings.Default.ScreenName);
+        }
+
+        private async Task VerifyTwitterAccount()
+        {
+            try
+            {
+                tokens = Tokens.Create(SecretResources.CK, SecretResources.CS, Settings.Default.AT, Settings.Default.ATS);
+                await tokens.Account.VerifyCredentialsAsync();
+                StatusLabel.Text = "Ready";
+            }
+            catch (TwitterException)
+            {
+                StatusLabel.Text = "Unconnected to your Twitter account";
+            }
         }
 
         private void UpdateScreenNameLabel(string screenName)
@@ -81,7 +92,7 @@ namespace foobar4423
             }
         }
 
-        /*******ツイート*******/
+/*******ツイート*******/
         /// <summary>
         /// textBoxのなうぷれをツイート
         /// </summary>
