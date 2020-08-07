@@ -49,7 +49,7 @@ namespace foobar4423
             checkBox_balloon.Checked = Settings.Default.IsBalloon;
         }
 
-        private void button_reset_Click(object sender, EventArgs e)
+        private void OnResetButtonClicked(object sender, EventArgs e)
         {
             var result = MessageBox.Show("フォーマットを初期設定に戻しますか?", "確認",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
