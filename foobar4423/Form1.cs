@@ -3,51 +3,41 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows;
-using TweetSharp;
+using CoreTweet;
 using foobar4423.Properties;
 using NowPlayingLib;
 using System.Diagnostics;
+using System.Net;
 
 namespace foobar4423
 {
     public partial class Form1 : Form
     {
-        private TwitterService service;
-        private IMediaPlayer player = new NowPlayingLib.Foobar2000();
-
-        private string ScreenName
-        {
-            get
-            {
-                string screenName = Settings.Default.ScreenName;
-                return (screenName == string.Empty) ? screenName : "@" + screenName;
-            }
-        }
-
+        private Tokens tokens;
+        private IMediaPlayer player;
+        
 
         public Form1()
         {
             InitializeComponent();
+
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
+            player = new NowPlayingLib.Foobar2000();
+            var p = player as INotifyPlayerStateChanged;
+            if (p != null)
+            {
+                p.CurrentMediaChanged += OnCurrentMediaChanged;
+            }
 
             Application.ApplicationExit += (_, __) =>
             {
                 this.NotifyIcon.Dispose();
                 this.player.Dispose();
             };
-
-            try {
-                service = new TwitterService(Resources.CK, Resources.CS);
-                service.AuthenticateWith(Settings.Default.AT, Settings.Default.ATS);
-            }
-            catch (Exception) {
-                StatusLabel.Text = "Faild to recognize the token";
-            }
-
-            ScreenNameLabel.Text = ScreenName;
         }
 
 
-       
 /*******メニュー画面*******/
         private void toolStripMenuItem_Config_Click(object sender, EventArgs e)
         {
@@ -55,13 +45,13 @@ namespace foobar4423
             fc.ShowDialog();
         }
 
-        private void ToolStripMenuItem_OAuth_Click(object sender, EventArgs e)
+        private async void ToolStripMenuItem_OAuth_Click(object sender, EventArgs e)
         {
             Form_OAuth fo = new Form_OAuth();
             fo.ShowDialog();
 
-            ScreenNameLabel.Text = ScreenName;
-            service.AuthenticateWith(Settings.Default.AT, Settings.Default.ATS);
+            await VerifyTwitterAccount();
+            UpdateScreenNameLabel(Settings.Default.ScreenName);
         }
 
         private void ToolStripMenuItem_Exit_Click(object sender, EventArgs e)
@@ -69,36 +59,70 @@ namespace foobar4423
             Application.Exit();
         }
 
-       
+        private async void OnFormShown(object sender, EventArgs e)
+        {
+            await Task.Delay(200);
+            await VerifyTwitterAccount();
+            UpdateScreenNameLabel(Settings.Default.ScreenName);
+        }
+
+        private async Task VerifyTwitterAccount()
+        {
+            try
+            {
+                tokens = Tokens.Create(SecretResources.CK, SecretResources.CS, Settings.Default.AT, Settings.Default.ATS);
+                await tokens.Account.VerifyCredentialsAsync();
+                StatusLabel.Text = "Ready";
+            }
+            catch (TwitterException)
+            {
+                StatusLabel.Text = "Unconnected to your Twitter account";
+            }
+        }
+
+        private void UpdateScreenNameLabel(string screenName)
+        {
+            if (String.IsNullOrEmpty(screenName))
+            {
+                ScreenNameLabel.Text = "";
+            }
+            else
+            {
+                ScreenNameLabel.Text = "@" + screenName;
+            }
+        }
+
 /*******ツイート*******/
         /// <summary>
         /// textBoxのなうぷれをツイート
         /// </summary>
-        private void PostNowPlaying()
+        private async Task PostNowPlaying()
         {
+            if (String.IsNullOrEmpty(TweetText.Text))
+            {
+                return;
+            }
+
             try
             {
-                var status = service.SendTweet(new SendTweetOptions { Status = TweetText.Text });
-                SyncInvoke(() => StatusLabel.Text = status != null ? "Tweet succeeded" : "Failed to tweet");
-                TweetStatusChanged(status);
+                await tokens.Statuses.UpdateAsync(status => TweetText.Text);
+                NotifyTweetResult(isSucceeded: true);
             }
-            catch (Exception ex)
+            catch (TwitterException)
             {
-                SyncInvoke(() => StatusLabel.Text = ex.Message);
+                NotifyTweetResult(isSucceeded: false);
             }
         }
 
-        private void TweetStatusChanged(TwitterStatus status)
+        private void NotifyTweetResult(bool isSucceeded)
         {
-            if (!Settings.Default.IsBalloon) return;
+            var message = isSucceeded ? "Tweeted" : "Failed to tweet";
+            var icon = isSucceeded ? ToolTipIcon.Info : ToolTipIcon.Error;
 
-            if (status != null)
+            StatusLabel.Text = message;
+            if (Settings.Default.ShowBalloon)
             {
-                ShowBalloonTip(ToolTipIcon.Info, "Tweet succeeded", this.TweetText.Text);
-            }
-            else
-            {
-                ShowBalloonTip(ToolTipIcon.Error, "Faild to tweet", this.TweetText.Text);
+                ShowBalloonTip(icon, message, TweetText.Text);
             }
         }
 
@@ -107,7 +131,7 @@ namespace foobar4423
             button_post.Enabled = false;
             button_post.Text = "Posting";
 
-            await Task.Run(() => PostNowPlaying());
+            await PostNowPlaying();
 
             button_post.Enabled = true;
             button_post.Text = "Post";
@@ -118,60 +142,56 @@ namespace foobar4423
         /// <summary>
         /// なうぷれを取得
         /// </summary>
-        private async void GetNowPlaying()
+        private async Task GenerateNowPlaying()
         {
-            try
+            if (Process.GetProcessesByName("foobar2000").Length == 0)
             {
-                SetCurrentMedia(this.player, new CurrentMediaChangedEventArgs(await this.player.GetCurrentMedia()));
-            }
-            catch (Exception)
-            {
-                SyncInvoke(() =>
-                {
-                    TweetText.Text = "";
-                    StatusLabel.Text = "Faild to generate NowPlaying";
-                });
-            }
-        }
-
-        private void SetCurrentMedia(object sender, CurrentMediaChangedEventArgs e)
-        {
-            if (player.PlayerState != PlayerState.Playing)
-            {
-                SyncInvoke(() =>
-                {
-                    TweetText.Text = "";
-                    StatusLabel.Text = "foobar2000 is not playing";
-                });
+                TweetText.Text = "";
+                StatusLabel.Text = "Failed to detect foobar2000";
                 return;
             }
 
-            // なうぷれ取得
-            string text = NowPlayingParser.Parse(Settings.Default.NowPlayingFormat, e.CurrentMedia);
-            SyncInvoke(() =>
+            if (player.PlayerState != PlayerState.Playing)
             {
-                TweetText.Text = text;
-                StatusLabel.Text = "NowPlaying succeeded";
-            });
+                TweetText.Text = "";
+                StatusLabel.Text = "foobar2000 is not playing song";
+                return;
+            }
 
-            if (checkBox_autoPost.Checked)
+            MediaItem media;
+            try
             {
-                PostNowPlaying();
-            }            
+                media = await player.GetCurrentMedia();
+            }
+            catch (Exception)
+            {
+                TweetText.Text = "";
+                StatusLabel.Text = "Failed to get information from foobar2000";
+                return;
+            }
+
+            GenerateNowPlayingCore(media);
+        }
+
+        private void GenerateNowPlayingCore(MediaItem media)
+        {
+            try
+            {
+                TweetText.Text = NowPlayingParser.Parse(Settings.Default.NowPlayingFormat, media);
+                StatusLabel.Text = "Generated nowplaying";
+            }
+            catch (Exception)
+            {
+                TweetText.Text = "";
+                StatusLabel.Text = "Failed to generate nowplaying";
+            }
         }
 
         private async void button_getNowPlaying_Click(object sender, EventArgs e)
         {
             button_getNowPlaying.Enabled = false;
 
-            if (Process.GetProcessesByName("foobar2000").Length != 0)
-            {
-                await Task.Run(() => GetNowPlaying());
-            }
-            else
-            {
-                StatusLabel.Text = "Faild to detect foobar2000";
-            }
+            await GenerateNowPlaying();
             
             button_getNowPlaying.Enabled = true;
         }
@@ -187,29 +207,18 @@ namespace foobar4423
             this.button_post.Enabled = length > 0;            
         }
         
-        
-        private void checkBox_autoPost_CheckedChanged(object sender, EventArgs e)
+        private async void OnCurrentMediaChanged(object sender, CurrentMediaChangedEventArgs e)
         {
-            var p = this.player as INotifyPlayerStateChanged;
-            if (p != null)
+            if (checkBox_autoPost.Checked)
             {
-                if (checkBox_autoPost.Checked)
-                {
-                    p.CurrentMediaChanged += SetCurrentMedia;
-                }
-                else
-                {
-                    p.CurrentMediaChanged -= SetCurrentMedia;
-                }
-                // foobar2000から曲情報が取り出せないことがある(InvalidArgumentEx:無効なパス)
-                // CurrentMediaChangedはその例外時に発火しないため
-                // foobar4423側でハンドル出来ずAutoPost時に曲取得エラーをUIに反映することが出来ない
+                SyncInvoke(() => GenerateNowPlayingCore(e.CurrentMedia));
+                await PostNowPlaying();
             }
         }
 
         #region "  通知領域  "
 
-            //最小化時
+        //最小化時
         private void Form1_Resize(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized)
@@ -255,10 +264,10 @@ namespace foobar4423
             Display();
         }
 
-        private void postNowPlayingPToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void postNowPlayingPToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            GetNowPlaying();
-            PostNowPlaying();
+            await GenerateNowPlaying();
+            await PostNowPlaying();
         }
 
         private void exitEToolStripMenuItem_Click(object sender, EventArgs e)

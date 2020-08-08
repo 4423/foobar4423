@@ -19,7 +19,7 @@ namespace foobar4423.Properties {
     // または Visual Studio のようなツールを使用して自動生成されました。
     // メンバーを追加または削除するには、.ResX ファイルを編集して、/str オプションと共に
     // ResGen を実行し直すか、または VS プロジェクトをビルドし直します。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -47,7 +47,7 @@ namespace foobar4423.Properties {
         }
         
         /// <summary>
-        ///   厳密に型指定されたこのリソース クラスを使用して、すべての検索リソースに対し、
+        ///   すべてについて、現在のスレッドの CurrentUICulture プロパティをオーバーライドします
         ///   現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -88,24 +88,6 @@ namespace foobar4423.Properties {
         }
         
         /// <summary>
-        ///   fhtoSvAE9Uaxmnv51Nbalg に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string CK {
-            get {
-                return ResourceManager.GetString("CK", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   lbHj8x8ghEtmnv6TZarKIKUseWrFxLzesSl8XkapkX4 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string CS {
-            get {
-                return ResourceManager.GetString("CS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   $SONG$&lt; - $ARTIST$&gt;&lt; via $ALBUM$&gt;&lt; - $ALBUM_ARTIST$&gt;&lt; / Track.$TRACK_NUMBER$&gt; #nowplaying に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string DefaultFormat {
@@ -124,7 +106,7 @@ namespace foobar4423.Properties {
         }
         
         /// <summary>
-        ///   http://4423lab.webcrow.jp/app/nowplaying/index.html#format に類似しているローカライズされた文字列を検索します。
+        ///   https://4423.ch/apps/foobar4423/#format に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string HelpUrl {
             get {
