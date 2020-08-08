@@ -7,11 +7,11 @@ using System.Resources;
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
 [assembly: AssemblyTitle("foobar4423")]
-[assembly: AssemblyDescription("NowPlaying of foobar2000")]
+[assembly: AssemblyDescription("NowPlaying for foobar2000")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("4423LabRatory")]
+[assembly: AssemblyCompany("4423.ch")]
 [assembly: AssemblyProduct("foobar4423")]
-[assembly: AssemblyCopyright("Copyright ©  2014 4423LabRatory")]
+[assembly: AssemblyCopyright("Copyright ©  2020 foobar4423")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -33,6 +33,6 @@ using System.Resources;
 // すべての値を指定するか、下のように '*' を使ってビルドおよびリビジョン番号を 
 // 既定値にすることができます:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.2.0.0")]
-[assembly: AssemblyFileVersion("0.2.0.0")]
+[assembly: AssemblyVersion("0.4.0.0")]
+[assembly: AssemblyFileVersion("0.4.0.0")]
 [assembly: NeutralResourcesLanguageAttribute("")]
