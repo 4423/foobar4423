@@ -41,7 +41,7 @@
             // 
             // button_save
             // 
-            this.button_save.Location = new System.Drawing.Point(135, 140);
+            this.button_save.Location = new System.Drawing.Point(135, 138);
             this.button_save.Name = "button_save";
             this.button_save.Size = new System.Drawing.Size(75, 23);
             this.button_save.TabIndex = 2;
@@ -51,7 +51,7 @@
             // 
             // button_cancel
             // 
-            this.button_cancel.Location = new System.Drawing.Point(216, 140);
+            this.button_cancel.Location = new System.Drawing.Point(216, 138);
             this.button_cancel.Name = "button_cancel";
             this.button_cancel.Size = new System.Drawing.Size(75, 23);
             this.button_cancel.TabIndex = 3;
@@ -66,16 +66,16 @@
             // checkBox_balloon
             // 
             this.checkBox_balloon.AutoSize = true;
-            this.checkBox_balloon.Location = new System.Drawing.Point(14, 112);
+            this.checkBox_balloon.Location = new System.Drawing.Point(14, 110);
             this.checkBox_balloon.Name = "checkBox_balloon";
-            this.checkBox_balloon.Size = new System.Drawing.Size(148, 16);
+            this.checkBox_balloon.Size = new System.Drawing.Size(149, 16);
             this.checkBox_balloon.TabIndex = 9;
-            this.checkBox_balloon.Text = "バルーン通知を有効にする";
+            this.checkBox_balloon.Text = "Enable toast notification";
             this.checkBox_balloon.UseVisualStyleBackColor = true;
             // 
             // button_reset
             // 
-            this.button_reset.Location = new System.Drawing.Point(251, 13);
+            this.button_reset.Location = new System.Drawing.Point(251, 14);
             this.button_reset.Name = "button_reset";
             this.button_reset.Size = new System.Drawing.Size(40, 19);
             this.button_reset.TabIndex = 8;
@@ -85,7 +85,7 @@
             // 
             // textBox_format
             // 
-            this.textBox_format.Location = new System.Drawing.Point(14, 35);
+            this.textBox_format.Location = new System.Drawing.Point(14, 37);
             this.textBox_format.Multiline = true;
             this.textBox_format.Name = "textBox_format";
             this.textBox_format.Size = new System.Drawing.Size(277, 60);
@@ -95,17 +95,17 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 16);
+            this.label2.Location = new System.Drawing.Point(12, 17);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(148, 12);
+            this.label2.Size = new System.Drawing.Size(101, 12);
             this.label2.TabIndex = 5;
-            this.label2.Text = "NowPlayingの投稿フォーマット";
+            this.label2.Text = "NowPlaying format";
             // 
             // helpLinkLabel
             // 
             this.helpLinkLabel.AutoSize = true;
             this.helpLinkLabel.BackColor = System.Drawing.Color.Transparent;
-            this.helpLinkLabel.Location = new System.Drawing.Point(216, 16);
+            this.helpLinkLabel.Location = new System.Drawing.Point(214, 17);
             this.helpLinkLabel.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.helpLinkLabel.Name = "helpLinkLabel";
             this.helpLinkLabel.Size = new System.Drawing.Size(26, 12);
@@ -119,7 +119,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(305, 177);
+            this.ClientSize = new System.Drawing.Size(305, 174);
             this.Controls.Add(this.checkBox_balloon);
             this.Controls.Add(this.button_reset);
             this.Controls.Add(this.textBox_format);

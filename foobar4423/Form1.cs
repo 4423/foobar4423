@@ -116,7 +116,7 @@ namespace foobar4423
 
         private void NotifyTweetResult(bool isSucceeded)
         {
-            var message = isSucceeded ? "Tweet succeeded" : "Failed to tweet";
+            var message = isSucceeded ? "Tweeted" : "Failed to tweet";
             var icon = isSucceeded ? ToolTipIcon.Info : ToolTipIcon.Error;
 
             StatusLabel.Text = message;

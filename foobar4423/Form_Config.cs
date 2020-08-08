@@ -51,7 +51,7 @@ namespace foobar4423
 
         private void OnResetButtonClicked(object sender, EventArgs e)
         {
-            var result = MessageBox.Show("フォーマットを初期設定に戻しますか?", "確認",
+            var result = MessageBox.Show("Reset format to default settings?", "Confirmation",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
@@ -61,7 +61,7 @@ namespace foobar4423
 
         private void OnHelpLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var result = MessageBox.Show("Webページを表示します。", "確認",
+            var result = MessageBox.Show("Open a web page.", "Confirmation",
                 MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
             if (result == DialogResult.OK)
             {

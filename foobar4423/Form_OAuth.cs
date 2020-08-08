@@ -29,8 +29,8 @@ namespace foobar4423
             }
             catch (Exception)
             {
-                MessageBox.Show("リクエストトークンが生成できませんでした。\nネットワーク接続を確認して下さい。",
-                        "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Failed to authorize. \nPlease check your internet connection.",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             button_OAuth.Enabled = true;
@@ -40,7 +40,7 @@ namespace foobar4423
         {
             if (string.IsNullOrEmpty(textBox_pin.Text))
             {
-                MessageBox.Show("PINを入力して下さい。", "エラー",
+                MessageBox.Show("Please enter the PIN code.", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
