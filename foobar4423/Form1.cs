@@ -22,19 +22,31 @@ namespace foobar4423
             InitializeComponent();
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                        
+            Application.ApplicationExit += (_, __) =>
+            {
+                this.NotifyIcon.Dispose();
+                this.player?.Dispose();
+            };
 
-            player = new NowPlayingLib.Foobar2000();
+            try
+            {
+                player = new NowPlayingLib.Foobar2000();
+            }
+            catch (TypeInitializationException ex)
+            {
+                MessageBox.Show(ex.InnerException.Message,
+                    "Failed to initialize COM Automation server",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                Application.Exit();
+            }
+
             var p = player as INotifyPlayerStateChanged;
             if (p != null)
             {
                 p.CurrentMediaChanged += OnCurrentMediaChanged;
             }
-
-            Application.ApplicationExit += (_, __) =>
-            {
-                this.NotifyIcon.Dispose();
-                this.player.Dispose();
-            };
         }
 
 
